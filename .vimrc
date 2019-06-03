@@ -22,6 +22,7 @@ set scrolloff=1
 set sidescrolloff=5
 "set wrap!
 set display+=lastline
+set visualbell
 
 " INDENTING AND EDITING
 set ts=4 sw=4 et
@@ -46,19 +47,21 @@ nnoremap <leader>j J
 nnoremap <leader>k K
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>? :set list!<CR>
+nnoremap <leader>\ :e $MYVIMRC<CR>
 noremap <c-k> <Esc>
 noremap! <c-k> <Esc>
 nnoremap <Space> <c-w><c-w>
 inoremap <s-Tab> <c-d>
 nnoremap <PageUp> :cd ..<CR>:pwd<CR>
-nnoremap <PageDown> :cd %:p:h<CR>:pwd<CR>
+nnoremap <PageDown> :pwd<CR>
+nnoremap <End> :cd %:p:h<CR>:pwd<CR>
 nnoremap <Home> :cd ~<CR>:pwd<CR>
-nnoremap <Insert> mmhEa"<Esc>Bi"<Esc>`m:echom 'Quotation added'<CR>
-nnoremap <End> mm:%s/\s\+$//g<CR>`m:echom 'Trailing spaces removed'<CR>
-nnoremap <Delete> f)mm%bdwx`mx:echom 'Function removed'<CR>
+nnoremap <Insert> :call Enclose()<CR>
+nnoremap <Delete> F(bdf(f)x:echom 'Function removed'<CR>
 
-inoremap <c-b> {<CR><Tab><Esc>o}<Esc><<k$a
-inoremap <c-a> <Esc>O/*<CR><Space>*<Space><CR>*/<Esc>k$a
+inoremap <c-a><c-a> <c-a>
+inoremap <c-a>b {<CR><Tab><Esc>o}<Esc><<k$a
+inoremap <c-a>c <Esc>O/**<CR><Space>*<Space><CR>*/<Esc>k$a
 
 noremap  <Up> <c-w>+
 noremap! <Up> <Esc>
@@ -68,6 +71,10 @@ noremap  <Left> <c-w><
 noremap! <Left> <Esc>
 noremap  <Right> <c-w>>
 noremap! <Right> <Esc>
+
+" COMMANDS
+
+command! Rts :call RemoveTrailingSpaces()
 
 "---------"
 "-PLUGINS-"
@@ -105,3 +112,23 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 5)<CR>
 
 " SIMPLE WORKSPACE
 let g:simplews_short_commands = 1
+
+"-----------"
+"-FUNCTIONS-"
+"-----------"
+
+function! Enclose()
+    let char1 = nr2char(getchar())
+    exec "normal lbi" . char1
+    let char2 = nr2char(getchar())
+    exec "normal ea" . char2
+    echom "Enclosed!"
+endfunction
+
+function! RemoveTrailingSpaces()
+    let line = line(".")
+    %s/\s\+$//g
+    exec ":" . line
+    redraw
+    echom 'Trailing spaces removed'
+endfunction
