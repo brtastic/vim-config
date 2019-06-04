@@ -42,7 +42,7 @@ nnoremap J :bprev<CR>
 nnoremap K :bnext<CR>
 nnoremap + o<Esc>
 nnoremap <leader>, ,
-nnoremap <leader>Q :Bw<CR>
+nnoremap <leader>x :Bw<CR>
 nnoremap <leader>j J
 nnoremap <leader>k K
 nnoremap <leader>h :set hlsearch!<CR>
@@ -75,6 +75,7 @@ noremap! <Right> <Esc>
 " COMMANDS
 
 command! Rts :call RemoveTrailingSpaces()
+command! Cs :call CheckSyntax()
 
 "---------"
 "-PLUGINS-"
@@ -132,3 +133,22 @@ function! RemoveTrailingSpaces()
     redraw
     echom 'Trailing spaces removed'
 endfunction
+
+function! CheckSyntax()
+    let path = expand("%:p")
+    if path =~ "\.php$"
+        let command = "php -l "
+    elseif path =~ "\.p[ml]$"
+        let command = "perl -c "
+    else
+        echom "Unknown file extension"
+        return
+    endif
+    rightbelow new
+    resize -10
+    call append(0, system(command . path))
+    setlocal modifiable!  buftype=nofile buflisted! bufhidden=wipe
+    map <buffer> q :q<CR>
+    map <buffer> <CR> :q<CR>
+endfunction
+
