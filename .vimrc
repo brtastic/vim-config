@@ -37,10 +37,15 @@ set ignorecase
 set smartcase
 
 " GENERAL KEYBINDINGS
-let mapleader = ","
+noremap <c-k> <Esc>
+noremap! <c-k> <Esc>
+
 nnoremap J :bprev<CR>
 nnoremap K :bnext<CR>
 nnoremap + o<Esc>
+nnoremap <c-n> :enew<CR>
+
+let mapleader = ","
 nnoremap <leader>, ,
 nnoremap <leader>x :Bw<CR>
 nnoremap <leader>j J
@@ -48,20 +53,23 @@ nnoremap <leader>k K
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>? :set list!<CR>
 nnoremap <leader>\ :e $MYVIMRC<CR>
-noremap <c-k> <Esc>
-noremap! <c-k> <Esc>
-nnoremap <Space> <c-w><c-w>
-inoremap <s-Tab> <c-d>
-nnoremap <PageUp> :cd ..<CR>:pwd<CR>
-nnoremap <PageDown> :pwd<CR>
-nnoremap <End> :cd %:p:h<CR>:pwd<CR>
-nnoremap <Home> :cd ~<CR>:pwd<CR>
-nnoremap <Insert> :call Enclose()<CR>
-nnoremap <Delete> F(bdf(f)x:echom 'Function removed'<CR>
+nnoremap <leader>e :call Enclose()<CR>
+vnoremap <leader>a :'<,'>!column -t<CR>
+nnoremap <leader>/ :cw<CR>
+nnoremap <leader>c :call RunAsCommand()<CR>
 
 inoremap <c-a><c-a> <c-a>
 inoremap <c-a>b {<CR><Tab><Esc>o}<Esc><<k$a
 inoremap <c-a>c <Esc>O/**<CR><Space>*<Space><CR>*/<Esc>k$a
+inoremap <s-Tab> <c-d>
+
+nnoremap <Space> <c-w><c-w>
+nnoremap <PageUp> :cd ..<CR>:pwd<CR>
+nnoremap <PageDown> :pwd<CR>
+nnoremap <End> :cd %:p:h<CR>:pwd<CR>
+nnoremap <Home> :cd ~<CR>:pwd<CR>
+nnoremap <Insert> <nop>
+nnoremap <Delete> <nop>
 
 noremap  <Up> <c-w>+
 noremap! <Up> <Esc>
@@ -75,7 +83,11 @@ noremap! <Right> <Esc>
 " COMMANDS
 
 command! Rts :call RemoveTrailingSpaces()
+command! Rf :call RemoveFunction()
 command! Cs :call CheckSyntax()
+command! -nargs=+ Find :call Find(<f-args>)
+command! Commands :e ~/.vim/commands
+command! Notes :e ~/.vim/notes
 
 "---------"
 "-PLUGINS-"
@@ -119,10 +131,8 @@ let g:simplews_short_commands = 1
 "-----------"
 
 function! Enclose()
-    let char1 = nr2char(getchar())
-    exec "normal lbi" . char1
-    let char2 = nr2char(getchar())
-    exec "normal ea" . char2
+    exec "normal lbi" . nr2char(getchar())
+    exec "normal ea" . nr2char(getchar())
     echom "Enclosed!"
 endfunction
 
@@ -132,6 +142,21 @@ function! RemoveTrailingSpaces()
     exec ":" . line
     redraw
     echom 'Trailing spaces removed'
+endfunction
+
+function! RemoveFunction()
+    execute "normal F(bdf(f)x"
+    echom 'Function removed'
+endfunction
+
+function! Find(...)
+    let phrase = a:1
+    let ext = a:0 > 1 ? a:2 : ""
+    if len(ext) > 0
+        let ext = "." . ext
+    endif
+    execute "vimgrep /" . phrase . "/ **/*" . ext
+    execute "cw"
 endfunction
 
 function! CheckSyntax()
@@ -147,8 +172,12 @@ function! CheckSyntax()
     rightbelow new
     resize -10
     call append(0, system(command . path))
-    setlocal modifiable!  buftype=nofile buflisted! bufhidden=wipe
+    setlocal modifiable! buftype=nofile buflisted! bufhidden=wipe
     map <buffer> q :q<CR>
     map <buffer> <CR> :q<CR>
 endfunction
 
+function! RunAsCommand()
+    let line = "!" . getline(".")
+    execute line
+endfunction
