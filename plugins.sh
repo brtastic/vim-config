@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Set up environment
 #git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
