@@ -18,7 +18,7 @@ syntax on
 set listchars=tab:»\ ,space:·,trail:‼
 set number
 set relativenumber
-set scrolloff=1
+set scrolloff=2
 set sidescrolloff=5
 "set wrap!
 set display+=lastline
@@ -86,8 +86,8 @@ command! Rts :call RemoveTrailingSpaces()
 command! Rf :call RemoveFunction()
 command! Cs :call CheckSyntax()
 command! -nargs=+ Find :call Find(<f-args>)
-command! Commands :e ~/.vim/commands
-command! Notes :e ~/.vim/notes
+command! Commands :call OpenFileAside("~/.vim/commands")
+command! Notes :call OpenFileAside("~/.vim/notes")
 
 "---------"
 "-PLUGINS-"
@@ -118,10 +118,10 @@ nmap - <Plug>(choosewin)
 noremap <leader>y :TlistToggle<CR>
 
 " SMOOTH SCROLL
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 5)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 5)<CR>
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 15, 3)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 15, 3)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 15, 5)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 15, 5)<CR>
 
 " SIMPLE WORKSPACE
 let g:simplews_short_commands = 1
@@ -133,7 +133,7 @@ let g:simplews_short_commands = 1
 function! Enclose()
     exec "normal lbi" . nr2char(getchar())
     exec "normal ea" . nr2char(getchar())
-    echom "Enclosed!"
+    echom "Enclosed"
 endfunction
 
 function! RemoveTrailingSpaces()
@@ -180,4 +180,11 @@ endfunction
 function! RunAsCommand()
     let line = "!" . getline(".")
     execute line
+endfunction
+
+function! OpenFileAside(path)
+    execute "rightbelow split " . a:path
+    resize -10
+    setlocal buflisted! bufhidden=wipe
+    map <buffer>q :q<CR>
 endfunction
