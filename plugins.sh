@@ -1,20 +1,23 @@
 #!/bin/bash
 
 # Set up environment
+#mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+#curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 #git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 #~/.fzf/install
 #printf "tags\n*~" >> ~/.gitignore
 #git config --global core.excludesfile ~/.gitignore
 
 # Clone plugins
-git clone https://github.com/ludovicchabant/vim-gutentags
-git clone https://github.com/junegunn/fzf
-git clone https://github.com/universal-ctags/ctags
-git clone https://github.com/brtastic/vim-simple-workspace
-git clone https://github.com/scrooloose/nerdtree
-git clone https://github.com/vim-scripts/taglist.vim
-git clone https://github.com/vim-airline/vim-airline
-git clone https://github.com/t9md/vim-choosewin
-git clone https://github.com/moll/vim-bbye
-git clone https://github.com/terryma/vim-smooth-scroll
-git clone https://github.com/dracula/vim
+cd ~/.vim/bundle
+git clone git@github.com:ludovicchabant/vim-gutentags.git
+git clone git@github.com:junegunn/fzf.git
+git clone git@github.com:universal-ctags/ctags.git
+git clone git@github.com:brtastic/vim-simple-workspace.git
+git clone git@github.com:scrooloose/nerdtree.git
+git clone git@github.com:vim-scripts/taglist.vim.git
+git clone git@github.com:vim-airline/vim-airline.git
+git clone git@github.com:t9md/vim-choosewin.git
+git clone git@github.com:moll/vim-bbye.git
+git clone git@github.com:dracula/vim.git
+git clone git@github.com:lucasicf/vim-smooth-scroll.git

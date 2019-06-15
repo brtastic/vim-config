@@ -100,7 +100,9 @@ noremap <leader>t :NERDTreeVCS<CR>
 noremap <leader>T :NERDTreeFind<CR>
 
 " VDEBUG
-let g:vdebug_options = {"path_maps": {"/var/www/html": "/home/bartosz/dox/drupal"}}
+let g:vdebug_options = {}
+let g:vdebug_options["path_maps"] = {} " todo
+let g:vdebug_options["break_on_open"] = 0
 
 " AIRLINE
 let g:airline#extensions#tabline#enabled = 1
