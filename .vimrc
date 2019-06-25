@@ -39,6 +39,7 @@ set smartcase
 " GENERAL KEYBINDINGS
 noremap <c-k> <Esc>
 noremap! <c-k> <Esc>
+noremap! <c-j> <nop>
 
 nnoremap J :bprev<CR>
 nnoremap K :bnext<CR>
