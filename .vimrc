@@ -45,6 +45,10 @@ nnoremap J :bprev<CR>
 nnoremap K :bnext<CR>
 nnoremap + o<Esc>
 nnoremap <c-n> :enew<CR>
+noremap <c-u> 15k
+noremap <c-d> 15j
+noremap <c-b> 30kzz
+noremap <c-f> 30jzz
 
 let mapleader = ","
 nnoremap <leader>, ,
@@ -58,6 +62,10 @@ nnoremap <leader>e :call Enclose()<CR>
 vnoremap <leader>a :'<,'>!column -t<CR>
 nnoremap <leader>/ :cw<CR>
 nnoremap <leader>c :call RunAsCommand()<CR>
+nnoremap <leader>sw :cd ..<CR>:pwd<CR>
+nnoremap <leader>se :pwd<CR>
+nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>sh :cd ~<CR>:pwd<CR>
 
 inoremap <c-a><c-a> <c-a>
 inoremap <c-a>b {<CR><Tab><Esc>o}<Esc><<k$a
@@ -65,21 +73,19 @@ inoremap <c-a>c <Esc>O/**<CR><Space>*<Space><CR>*/<Esc>k$a
 inoremap <s-Tab> <c-d>
 
 nnoremap <Space> <c-w><c-w>
-nnoremap <PageUp> :cd ..<CR>:pwd<CR>
-nnoremap <PageDown> :pwd<CR>
-nnoremap <End> :cd %:p:h<CR>:pwd<CR>
-nnoremap <Home> :cd ~<CR>:pwd<CR>
+nnoremap <End> <nop>
+nnoremap <Home> <nop>
 nnoremap <Insert> <nop>
 nnoremap <Delete> <nop>
 
-noremap  <Up> <c-w>+
+noremap  <Up> <c-w>>
 noremap! <Up> <Esc>
-noremap  <Down> <c-w>-
+noremap  <Down> <c-w><
 noremap! <Down> <Esc>
-noremap  <Left> <c-w><
-noremap! <Left> <Esc>
-noremap  <Right> <c-w>>
-noremap! <Right> <Esc>
+noremap  <S-Up> <c-w>+
+noremap! <S-Up> <Esc>
+noremap  <S-Down> <c-w>-
+noremap! <S-Down> <Esc>
 
 " COMMANDS
 
@@ -121,10 +127,8 @@ nmap - <Plug>(choosewin)
 noremap <leader>y :TlistToggle<CR>
 
 " SMOOTH SCROLL
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 15, 3)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 15, 3)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 15, 5)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 15, 5)<CR>
+noremap <silent> <PageUp> :call smooth_scroll#up(&scroll, 8, 1)<CR>
+noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 8, 1)<CR>
 
 " SIMPLE WORKSPACE
 let g:simplews_short_commands = 1
