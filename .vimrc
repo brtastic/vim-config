@@ -13,9 +13,11 @@ set autoread
 set nrformats-=octal
 
 " DISPLAY
-color dracula
+color gruvbox
+set background=dark
 syntax on
 set listchars=tab:»\ ,space:·,trail:‼
+set list
 set number
 set relativenumber
 set scrolloff=2
@@ -25,7 +27,8 @@ set display+=lastline
 set visualbell
 
 " INDENTING AND EDITING
-set ts=4 sw=4 et
+set ts=3 sw=3 noet
+"set ts=4 sw=4 et
 "set ts=2 sw=2 et
 set autoindent
 set backspace=indent,eol,start
@@ -45,10 +48,10 @@ nnoremap J :bprev<CR>
 nnoremap K :bnext<CR>
 nnoremap + o<Esc>
 nnoremap <c-n> :enew<CR>
-noremap <c-u> 15k
-noremap <c-d> 15j
-noremap <c-b> 30kzz
-noremap <c-f> 30jzz
+noremap <silent> <c-u> @='15k'<CR>
+noremap <silent> <c-d> @='15j'<CR>
+noremap <silent> <c-b> @='30kzz'<CR>
+noremap <silent> <c-f> @='30jzz'<CR>
 
 let mapleader = ","
 nnoremap <leader>, ,
@@ -58,7 +61,7 @@ nnoremap <leader>k K
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>? :set list!<CR>
 nnoremap <leader>\ :e $MYVIMRC<CR>
-nnoremap <leader>e :call Enclose()<CR>
+nnoremap <leader>r :call Enclose()<CR>
 vnoremap <leader>a :'<,'>!column -t<CR>
 nnoremap <leader>/ :cw<CR>
 nnoremap <leader>c :call RunAsCommand()<CR>
@@ -126,9 +129,11 @@ nmap - <Plug>(choosewin)
 " TLIST
 noremap <leader>y :TlistToggle<CR>
 
-" SMOOTH SCROLL
-noremap <silent> <PageUp> :call smooth_scroll#up(&scroll, 8, 1)<CR>
-noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 8, 1)<CR>
+" SMART WORD
+map <leader>w  <Plug>(smartword-w)
+map <leader>b  <Plug>(smartword-b)
+map <leader>e  <Plug>(smartword-e)
+map <leader>ge  <Plug>(smartword-ge)
 
 " SIMPLE WORKSPACE
 let g:simplews_short_commands = 1
