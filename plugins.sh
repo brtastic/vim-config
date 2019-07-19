@@ -8,7 +8,7 @@ git clone git@github.com:junegunn/fzf.vim.git
 git clone git@github.com:universal-ctags/ctags.git
 git clone git@github.com:brtastic/vim-simple-workspace.git
 git clone git@github.com:scrooloose/nerdtree.git
-git clone git@github.com:vim-scripts/taglist.vim.git
+git clone git@github.com:majutsushi/tagbar.git
 git clone git@github.com:vim-airline/vim-airline.git
 git clone git@github.com:moll/vim-bbye.git
 git clone git@github.com:morhetz/gruvbox.git

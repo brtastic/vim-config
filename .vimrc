@@ -128,8 +128,9 @@ nnoremap <leader>F :FZF --preview head\ -100\ {} ~<CR>
 nnoremap <leader>g :Tags<CR>
 nnoremap <leader>G :Lines<CR>
 
-" TLIST
-noremap <leader>y :TlistToggle<CR>
+" TAGBAR
+noremap <leader>y :TagbarToggle<CR>
+let g:tagbar_map_showproto = "r"
 
 " ACK
 let g:ackprg = 'ag --vimgrep'
