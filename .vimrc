@@ -116,6 +116,7 @@ let g:vdebug_options["break_on_open"] = 0
 
 " AIRLINE
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline_section_b = ''
 let g:airline_section_x = ''
 
@@ -131,6 +132,8 @@ nnoremap <leader>G :Lines<CR>
 " TAGBAR
 noremap <leader>y :TagbarToggle<CR>
 let g:tagbar_map_showproto = "r"
+let g:tagbar_map_jump = "o"
+let g:tagbar_map_togglefold = "za"
 
 " ACK
 let g:ackprg = 'ag --vimgrep'
