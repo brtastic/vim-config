@@ -11,6 +11,7 @@ set undodir=~/.vim/.undo//
 set history=1000
 set autoread
 set nrformats-=octal
+set tags=.ctags
 
 " DISPLAY
 color gruvbox
@@ -95,7 +96,6 @@ noremap! <S-Down> <Esc>
 command! Rts :call RemoveTrailingSpaces()
 command! Rf :call RemoveFunction()
 command! Cs :call CheckSyntax()
-command! -nargs=+ Find :call Find(<f-args>)
 command! Commands :call OpenFileAside("~/.vim/commands")
 command! Notes :call OpenFileAside("~/.vim/notes")
 
@@ -119,15 +119,23 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_section_b = ''
 let g:airline_section_x = ''
 
+" GUTENTAGS
+let g:gutentags_ctags_tagfile = ".ctags"
+
 " FZF
 nnoremap <leader>f :FZF --preview head\ -100\ {}<CR>
 nnoremap <leader>F :FZF --preview head\ -100\ {} ~<CR>
+nnoremap <leader>g :Tags<CR>
+nnoremap <leader>G :Lines<CR>
 
 " CHOOSEWIN
 nmap - <Plug>(choosewin)
 
 " TLIST
 noremap <leader>y :TlistToggle<CR>
+
+" ACK
+let g:ackprg = 'ag --vimgrep'
 
 " SMART WORD
 map <leader>w  <Plug>(smartword-w)
@@ -159,16 +167,6 @@ endfunction
 function! RemoveFunction()
     execute "normal F(bdf(f)x"
     echom 'Function removed'
-endfunction
-
-function! Find(...)
-    let phrase = a:1
-    let ext = a:0 > 1 ? a:2 : ""
-    if len(ext) > 0
-        let ext = "." . ext
-    endif
-    execute "vimgrep /" . phrase . "/ **/*" . ext
-    execute "cw"
 endfunction
 
 function! CheckSyntax()
