@@ -166,7 +166,7 @@ function! RemoveTrailingSpaces()
 endfunction
 
 function! RemoveFunction()
-    execute "normal F(bdf(f)x"
+    execute "normal \"zyi)da)bdw\"zP"
     echom 'Function removed'
 endfunction
 
