@@ -128,9 +128,6 @@ nnoremap <leader>F :FZF --preview head\ -100\ {} ~<CR>
 nnoremap <leader>g :Tags<CR>
 nnoremap <leader>G :Lines<CR>
 
-" CHOOSEWIN
-nmap - <Plug>(choosewin)
-
 " TLIST
 noremap <leader>y :TlistToggle<CR>
 
