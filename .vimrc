@@ -17,6 +17,7 @@ set tags=.ctags
 color gruvbox
 set background=dark
 syntax on
+filetype plugin on
 set listchars=tab:»\ ,space:·,trail:‼
 set list
 set number
@@ -46,9 +47,12 @@ noremap! <c-k> <Esc>
 noremap! <c-j> <nop>
 
 nnoremap J :bprev<CR>
+vnoremap J <nop>
 nnoremap K :bnext<CR>
+vnoremap K <nop>
 nnoremap + o<Esc>
-nnoremap <c-n> :enew<CR>
+nnoremap - O<Esc>
+nnoremap Q :rightbelow term<CR>
 noremap <silent> <c-u> @='15k'<CR>
 noremap <silent> <c-d> @='15j'<CR>
 noremap <silent> <c-b> @='30kzz'<CR>
@@ -58,7 +62,7 @@ let mapleader = ","
 nnoremap <leader>, ,
 nnoremap <leader>x :Bw<CR>
 nnoremap <leader>j J
-nnoremap <leader>k K
+vnoremap <leader>j J
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>? :set list!<CR>
 nnoremap <leader>\ :e $MYVIMRC<CR>
@@ -70,13 +74,17 @@ nnoremap <leader>sw :cd ..<CR>:pwd<CR>
 nnoremap <leader>se :pwd<CR>
 nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>sh :cd ~<CR>:pwd<CR>
+nnoremap <leader>p :call PhpDoc()<CR>
 
 inoremap <c-a><c-a> <c-a>
-inoremap <c-a>b {<CR><Tab><Esc>o}<Esc><<k$a
-inoremap <c-a>c <Esc>O/**<CR><Space>*<Space><CR>*/<Esc>k$a
+inoremap <c-a>{ {<CR>}<Esc>O<Tab>
+inoremap <c-a>[ [<CR>]<Esc>O<Tab>
+inoremap <c-a>( (<CR>)<Esc>O<Tab>
 inoremap <s-Tab> <c-d>
 
 nnoremap <Space> <c-w><c-w>
+tnoremap <c-k> <c-w>N
+tnoremap <c-e> <c-w>Niexit<CR><c-w>N:q<CR>
 nnoremap <End> <nop>
 nnoremap <Home> <nop>
 nnoremap <Insert> <nop>
@@ -108,6 +116,7 @@ command! Notes :call OpenFileAside("~/.vim/notes")
 "autocmd VimEnter * wincmd p
 noremap <leader>t :NERDTreeVCS<CR>
 noremap <leader>T :NERDTreeFind<CR>
+let NERDTreeMinimalUI = 1
 
 " VDEBUG
 let g:vdebug_options = {}
@@ -134,6 +143,7 @@ noremap <leader>y :TagbarToggle<CR>
 let g:tagbar_map_showproto = "r"
 let g:tagbar_map_jump = "o"
 let g:tagbar_map_togglefold = "za"
+let g:tagbar_compact = 1
 
 " ACK
 let g:ackprg = 'ag --vimgrep'
@@ -152,50 +162,51 @@ let g:simplews_short_commands = 1
 "-----------"
 
 function! Enclose()
-    exec "normal lbi" . nr2char(getchar())
-    exec "normal ea" . nr2char(getchar())
-    echom "Enclosed"
+	exec "normal lbi" . nr2char(getchar())
+	exec "normal ea" . nr2char(getchar())
+	echom "Enclosed"
 endfunction
 
 function! RemoveTrailingSpaces()
-    let line = line(".")
-    %s/\s\+$//g
-    exec ":" . line
-    redraw
-    echom 'Trailing spaces removed'
+	let line = line(".")
+	%s/\s\+$//g
+	exec ":" . line
+	redraw
+	echom 'Trailing spaces removed'
 endfunction
 
 function! RemoveFunction()
-    execute "normal \"zyi)da)bdw\"zP"
-    echom 'Function removed'
+	execute "normal \"zyi)da)bdw\"zP"
+	echom 'Function removed'
 endfunction
 
 function! CheckSyntax()
-    let path = expand("%:p")
-    if path =~ "\.php$"
-        let command = "php -l "
-    elseif path =~ "\.p[ml]$"
-        let command = "perl -c "
-    else
-        echom "Unknown file extension"
-        return
-    endif
-    rightbelow new
-    resize -10
-    call append(0, system(command . path))
-    setlocal modifiable! buftype=nofile buflisted! bufhidden=wipe
-    map <buffer> q :q<CR>
-    map <buffer> <CR> :q<CR>
+	let path = expand("%:p")
+	if &filetype ==# "php"
+		let command = "php -l "
+	elseif &filetype ==# "perl"
+		let command = "perl -c "
+	else
+		echom "Unknown filetype"
+		return
+	endif
+	rightbelow new
+	resize -10
+	call append(0, system(command . path))
+	setlocal modifiable! buftype=nofile buflisted! bufhidden=wipe
+	map <buffer> q :q<CR>
+	map <buffer> <CR> :q<CR>
 endfunction
 
 function! RunAsCommand()
-    let line = "!" . getline(".")
-    execute line
+	let line = "!" . getline(".")
+	execute line
 endfunction
 
 function! OpenFileAside(path)
-    execute "rightbelow split " . a:path
-    resize -10
-    setlocal buflisted! bufhidden=wipe
-    map <buffer>q :q<CR>
+	execute "rightbelow split " . a:path
+	resize -10
+	set buftype=nofile
+	setlocal buflisted! bufhidden=wipe
+	map <buffer>q :set buftype=<CR>:wq<CR>
 endfunction
