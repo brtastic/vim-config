@@ -12,12 +12,12 @@ set history=1000
 set autoread
 set nrformats-=octal
 set tags=.ctags
+filetype plugin on
 
 " DISPLAY
 color gruvbox
 set background=dark
 syntax on
-filetype plugin on
 set listchars=tab:»\ ,space:·,trail:‼
 set list
 set number
@@ -27,6 +27,7 @@ set sidescrolloff=5
 "set wrap!
 set display+=lastline
 set visualbell
+set termsize=10x0
 
 " INDENTING AND EDITING
 set ts=3 sw=3 noet
@@ -155,7 +156,7 @@ map <leader>e  <Plug>(smartword-e)
 map <leader>ge  <Plug>(smartword-ge)
 
 " SIMPLE WORKSPACE
-let g:simplews_short_commands = 1
+let g:simplews_short_commands = 0
 
 "-----------"
 "-FUNCTIONS-"
