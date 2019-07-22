@@ -15,5 +15,5 @@ git clone git@github.com:morhetz/gruvbox.git
 git clone git@github.com:kana/vim-smartword.git
 git clone git@github.com:mileszs/ack.vim.git
 git clone git@github.com:tpope/vim-commentary.git
-git clone git@github.com:sumpygump/php-documentor-vim.php
-# mv php-documentor-vim/ftplugin/php-documentor.vim php/documentor-vim/ftplugin/php.vim
+git clone git@github.com:sumpygump/php-documentor-vim.git
+mv php-documentor-vim/ftplugin/php_documentor.vim php-documentor-vim/ftplugin/php.vim
