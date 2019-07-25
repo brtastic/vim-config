@@ -13,6 +13,8 @@ set autoread
 set nrformats-=octal
 set tags=.ctags
 filetype plugin on
+au BufLeave * let b:winview = winsaveview()
+au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 
 " DISPLAY
 color gruvbox
@@ -107,6 +109,7 @@ command! Rf :call RemoveFunction()
 command! Cs :call CheckSyntax()
 command! Commands :call OpenFileAside("~/.vim/commands")
 command! Notes :call OpenFileAside("~/.vim/notes")
+command! W :w
 
 "---------"
 "-PLUGINS-"
