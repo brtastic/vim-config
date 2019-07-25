@@ -14,7 +14,7 @@ set nrformats-=octal
 set tags=.ctags
 filetype plugin on
 au BufLeave * let b:winview = winsaveview()
-au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | unlet b:winview | endif
 
 " DISPLAY
 color gruvbox
