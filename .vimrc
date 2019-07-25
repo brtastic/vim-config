@@ -13,8 +13,10 @@ set autoread
 set nrformats-=octal
 set tags=.ctags
 filetype plugin on
-au BufLeave * let b:winview = winsaveview()
-au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | unlet b:winview | endif
+if v:version >= 700
+	autocmd BufLeave * call AutoSaveWinView()
+	autocmd BufEnter * call AutoRestoreWinView()
+endif
 
 " DISPLAY
 color gruvbox
@@ -78,6 +80,7 @@ nnoremap <leader>se :pwd<CR>
 nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>sh :cd ~<CR>:pwd<CR>
 nnoremap <leader>p :call PhpDoc()<CR>
+nnoremap <leader>] :call LoadLanguageTags()<CR>
 
 inoremap <c-a><c-a> <c-a>
 inoremap <c-a>{ {<CR>}<Esc>O<Tab>
@@ -202,6 +205,11 @@ function! CheckSyntax()
 	map <buffer> <CR> :q<CR>
 endfunction
 
+function! LoadLanguageTags()
+	let file_location = "~/.vim/tags/" . &filetype
+	execute "set tags+=" . file_location
+endfunction
+
 function! RunAsCommand()
 	let line = "!" . getline(".")
 	execute line
@@ -213,4 +221,23 @@ function! OpenFileAside(path)
 	set buftype=nofile
 	setlocal buflisted! bufhidden=wipe
 	map <buffer>q :set buftype=<CR>:wq<CR>
+endfunction
+
+function! AutoSaveWinView()
+	if !exists("w:SavedBufView")
+		let w:SavedBufView = {}
+	endif
+	let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+function! AutoRestoreWinView()
+	let buf = bufnr("%")
+	if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+		let v = winsaveview()
+		let atStartOfFile = v.lnum == 1 && v.col == 0
+		if atStartOfFile && !&diff
+			call winrestview(w:SavedBufView[buf])
+		endif
+		unlet w:SavedBufView[buf]
+	endif
 endfunction
