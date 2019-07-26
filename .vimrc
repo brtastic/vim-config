@@ -11,7 +11,7 @@ set undodir=~/.vim/.undo//
 set history=1000
 set autoread
 set nrformats-=octal
-set tags=.ctags
+set tags=.ctags;$HOME
 filetype plugin on
 if v:version >= 700
 	autocmd BufLeave * call AutoSaveWinView()
