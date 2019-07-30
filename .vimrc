@@ -62,6 +62,8 @@ noremap <silent> <c-u> @='15k'<CR>
 noremap <silent> <c-d> @='15j'<CR>
 noremap <silent> <c-b> @='30kzz'<CR>
 noremap <silent> <c-f> @='30jzz'<CR>
+vnoremap <c-c> "+y
+noremap <c-v> "+P
 
 let mapleader = ","
 nnoremap <leader>, ,
@@ -107,12 +109,14 @@ noremap! <S-Down> <Esc>
 
 " COMMANDS
 
-command! Rts :call RemoveTrailingSpaces()
 command! Rf :call RemoveFunction()
 command! Cs :call CheckSyntax()
 command! Commands :call OpenFileAside("~/.vim/commands")
 command! Notes :call OpenFileAside("~/.vim/notes")
 command! W :w
+
+let g:fix_trail = 1
+autocmd BufWritePre * :call BeforeSave()
 
 "---------"
 "-PLUGINS-"
@@ -174,14 +178,6 @@ function! Enclose()
 	echom "Enclosed"
 endfunction
 
-function! RemoveTrailingSpaces()
-	let line = line(".")
-	%s/\s\+$//g
-	exec ":" . line
-	redraw
-	echom 'Trailing spaces removed'
-endfunction
-
 function! RemoveFunction()
 	execute "normal \"zyi)da)bdw\"zP"
 	echom 'Function removed'
@@ -221,6 +217,14 @@ function! OpenFileAside(path)
 	set buftype=nofile
 	setlocal buflisted! bufhidden=wipe
 	map <buffer>q :set buftype=<CR>:wq<CR>
+endfunction
+
+function! BeforeSave()
+	if g:fix_trail
+		let l:view = winsaveview()
+		%s/\s\+$//ge
+		call winrestview(l:view)
+	endif
 endfunction
 
 function! AutoSaveWinView()
