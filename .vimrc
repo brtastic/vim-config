@@ -214,8 +214,7 @@ endfunction
 function! OpenFileAside(path)
 	execute "rightbelow split " . a:path
 	resize -10
-	set buftype=nofile
-	setlocal buflisted! bufhidden=wipe
+	setlocal buftype=nofile buflisted! bufhidden=wipe
 	map <buffer>q :set buftype=<CR>:wq<CR>
 endfunction
 
