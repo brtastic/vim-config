@@ -34,9 +34,9 @@ endfunction
 
 " INDENTING AND EDITING
 function! s:setEditingOptions()
-	"set ts=3 sw=3 noet
+	set ts=3 sw=3 noet
 	"set ts=4 sw=4 et
-	set ts=2 sw=2 et
+	"set ts=2 sw=2 et
 	set autoindent
 	set backspace=indent,eol,start
 	set encoding=utf-8
