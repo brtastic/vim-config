@@ -164,7 +164,7 @@ function! s:setPluginOptions()
 	"autocmd VimEnter * wincmd p
 	noremap <leader>t :NERDTreeVCS<CR>
 	noremap <leader>T :NERDTreeFind<CR>
-	let NERDTreeMinimalUI = 1
+	let g:NERDTreeMinimalUI = 1
 
 	" VDEBUG
 	let g:vdebug_options = {}
