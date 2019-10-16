@@ -57,6 +57,8 @@ endfunction
 function! s:setGenericKeyMaps()
 	noremap <c-k> <Esc>
 	noremap! <c-k> <Esc>
+	noremap <c-c> <Esc>
+	noremap! <c-c> <Esc>
 	noremap! <c-j> <nop>
 
 	nnoremap J :bprev<CR>
@@ -70,12 +72,15 @@ function! s:setGenericKeyMaps()
 	noremap <silent> <c-d> @='15j'<CR>
 	noremap <silent> <c-b> @='30kzz'<CR>
 	noremap <silent> <c-f> @='30jzz'<CR>
+	noremap <c-e> 5<c-e>
+	noremap <c-y> 5<c-y>
 endfunction
 
 " LEADER KEY BINDINGS
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
 	nnoremap <leader>x :Bw<CR>
+	nnoremap <leader>X :Bw!<CR>
 	nnoremap <leader>j J
 	vnoremap <leader>j J
 	nnoremap <leader>h :set hlsearch!<CR>
@@ -85,27 +90,48 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>a :'<,'>!column -t<CR>
 	nnoremap <leader>/ :cw<CR>
 	nnoremap <leader>c :call RunAsCommand()<CR>
-	nnoremap <leader>sw :cd ..<CR>:pwd<CR>
-	nnoremap <leader>se :pwd<CR>
+	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
+	nnoremap <leader>sl :pwd<CR>
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
 	nnoremap <leader>sh :cd ~<CR>:pwd<CR>
 	nnoremap <leader>p :call PhpDoc()<CR>
 	nnoremap <leader>] :call LoadLanguageTags()<CR>
-	vnoremap <leader>vc "+y
-	noremap <leader>vv "+P
+	vnoremap <leader>vz "+y
+	noremap <leader>vv "+p
+	noremap <leader>vV "+P
 endfunction
 
 " INSERT MODE BINDINGS
 function! s:setInsertModeMaps()
-	inoremap <c-a>{ {<CR>}<Esc>O<Tab>
-	inoremap <c-a>} {<CR>};<Esc>O<Tab>
-	inoremap <c-a>}, {<CR>},<Esc>O<Tab>
-	inoremap <c-a>[ [<CR>]<Esc>O<Tab>
-	inoremap <c-a>] [<CR>];<Esc>O<Tab>
-	inoremap <c-a>], [<CR>],<Esc>O<Tab>
-	inoremap <c-a>( (<CR>)<Esc>O<Tab>
-	inoremap <c-a>) (<CR>);<Esc>O<Tab>
-	inoremap <c-a>), (<CR>),<Esc>O<Tab>
+	inoremap &<Tab> &
+	inoremap &{ {<CR>}<Esc>O<Tab>
+	inoremap &{; {<CR>};<Esc>O<Tab>
+	inoremap &{, {<CR>},<Esc>O<Tab>
+	inoremap &[ [<CR>]<Esc>O<Tab>
+	inoremap &[; [<CR>];<Esc>O<Tab>
+	inoremap &[, [<CR>],<Esc>O<Tab>
+	inoremap &( (<CR>)<Esc>O<Tab>
+	inoremap &(; (<CR>);<Esc>O<Tab>
+	inoremap &(, (<CR>),<Esc>O<Tab>
+
+	" PHP
+	inoremap &th $this->
+	inoremap &prf <Esc>biprotected function <Esc>A() {<CR>}<Esc>k$F)i
+	inoremap &puf <Esc>bipublic function <Esc>A() {<CR>}<Esc>k$F)i
+	inoremap &prsf <Esc>biprotected static function <Esc>A() {<CR>}<Esc>k$F)i
+	inoremap &pusf <Esc>bipubilc static function <Esc>A() {<CR>}<Esc>k$F)i
+
+	" PERL
+	inoremap &se $self->
+	inoremap &my my () = @_;<Esc>F)i
+	inoremap &moo has "" => (<CR>);<Esc>O<Tab>is => "rw",<Esc>k$F"i
+	inoremap &dd use Data::Dumper; print Dumper();<Esc>hi
+	inoremap &try try {<CR>} catch {<CR>};<Esc>kO<Tab>
+
+	" HTML
+	inoremap &tag <Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
+	inoremap &tc <Esc>F<ea class=""<Esc>i
+
 	inoremap <s-Tab> <c-d>
 endfunction
 
