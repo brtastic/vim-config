@@ -61,6 +61,10 @@ function! s:setGenericKeyMaps()
 	noremap! <c-c> <Esc>
 	noremap! <c-j> <nop>
 
+	nnoremap X D
+	nnoremap XX dd
+	vnoremap X D
+	vnoremap XX dd
 	nnoremap J :bprev<CR>
 	vnoremap J <nop>
 	nnoremap K :bnext<CR>
@@ -84,7 +88,6 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>j J
 	vnoremap <leader>j J
 	nnoremap <leader>h :set hlsearch!<CR>
-	nnoremap <leader>? :set list!<CR>
 	nnoremap <leader>\ :e $MYVIMRC<CR>
 	nnoremap <leader>r :call Enclose()<CR>
 	vnoremap <leader>a :'<,'>!column -t<CR>
@@ -95,7 +98,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
 	nnoremap <leader>sh :cd ~<CR>:pwd<CR>
 	nnoremap <leader>p :call PhpDoc()<CR>
-	nnoremap <leader>] :call LoadLanguageTags()<CR>
+	nnoremap <leader>? :call LoadLanguageTags()<CR>
 	vnoremap <leader>vz "+y
 	noremap <leader>vv "+p
 	noremap <leader>vV "+P
@@ -131,6 +134,7 @@ function! s:setInsertModeMaps()
 	" HTML
 	inoremap &tag <Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
 	inoremap &tc <Esc>F<ea class=""<Esc>i
+	inoremap &ts <Esc>F<f\>i style=""<Esc>i
 
 	inoremap <s-Tab> <c-d>
 endfunction
@@ -200,17 +204,23 @@ function! s:setPluginOptions()
 	" AIRLINE
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tagbar#enabled = 1
-	let g:airline_section_b = ''
+	let g:airline_section_b = '%{strftime("%H:%M")}'
 	let g:airline_section_x = ''
 
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
 
 	" FZF
-	nnoremap <leader>f :FZF --preview head\ -100\ {}<CR>
-	nnoremap <leader>F :FZF --preview head\ -100\ {} ~<CR>
-	nnoremap <leader>g :Tags<CR>
-	nnoremap <leader>G :Lines<CR>
+	nnoremap <leader>ff :Files<CR>
+	nnoremap <leader>ft :Tags<CR>
+	nnoremap <leader>fl :Lines<CR>
+	nnoremap <leader>fb :Buffers<CR>
+	nnoremap <leader>fm :Marks<CR>
+	nnoremap <leader>fc :Commits<CR>
+	nnoremap <leader>fC :BCommits<CR>
+	nnoremap <leader>fhf :History<CR>
+	nnoremap <leader>fhc :History:<CR>
+	nnoremap <leader>fhe :History/<CR>
 
 	" TAGBAR
 	noremap <leader>y :TagbarToggle<CR>

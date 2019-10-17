@@ -16,4 +16,5 @@ git clone git@github.com:kana/vim-smartword.git
 git clone git@github.com:mileszs/ack.vim.git
 git clone git@github.com:tpope/vim-commentary.git
 git clone git@github.com:sumpygump/php-documentor-vim.git
+git clone git@github.com:svermeulen/vim-cutlass.git
 mv php-documentor-vim/ftplugin/php_documentor.vim php-documentor-vim/ftplugin/php.vim
