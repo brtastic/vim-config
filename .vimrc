@@ -61,10 +61,14 @@ function! s:setGenericKeyMaps()
 	noremap! <c-c> <Esc>
 	noremap! <c-j> <nop>
 
-	nnoremap X D
-	nnoremap XX dd
-	vnoremap X D
-	vnoremap XX dd
+	noremap c "_c
+	noremap cc "_S
+	noremap C "_C
+	noremap s "_s
+	noremap S "_S
+	noremap x "_x
+	noremap X "_X
+
 	nnoremap J :bprev<CR>
 	vnoremap J <nop>
 	nnoremap K :bnext<CR>
