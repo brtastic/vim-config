@@ -95,7 +95,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>\ :e $MYVIMRC<CR>
 	nnoremap <leader>r :call Enclose()<CR>
 	vnoremap <leader>a :'<,'>!column -t<CR>
-	nnoremap <leader>/ :cw<CR>
+	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	nnoremap <leader>c :call RunAsCommand()<CR>
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
@@ -108,18 +108,26 @@ function! s:setLeaderKeyMaps()
 	noremap <leader>vV "+P
 endfunction
 
+" COMMAND MODE BINDINGS
+function! s:setCommandModeMaps()
+	cnoremap &br BreakpointR *<CR>
+	cnoremap &pp <c-r><c-o>"
+	cnoremap &ft set filetype=
+	cnoremap &/ Ack! ""<left>
+endfunction
+
 " INSERT MODE BINDINGS
 function! s:setInsertModeMaps()
 	inoremap &<Tab> &
 	inoremap &{ {<CR>}<Esc>O<Tab>
-	inoremap &{; {<CR>};<Esc>O<Tab>
-	inoremap &{, {<CR>},<Esc>O<Tab>
+	inoremap &;{ {<CR>};<Esc>O<Tab>
+	inoremap &,{ {<CR>},<Esc>O<Tab>
 	inoremap &[ [<CR>]<Esc>O<Tab>
-	inoremap &[; [<CR>];<Esc>O<Tab>
-	inoremap &[, [<CR>],<Esc>O<Tab>
+	inoremap &;[ [<CR>];<Esc>O<Tab>
+	inoremap &,[ [<CR>],<Esc>O<Tab>
 	inoremap &( (<CR>)<Esc>O<Tab>
-	inoremap &(; (<CR>);<Esc>O<Tab>
-	inoremap &(, (<CR>),<Esc>O<Tab>
+	inoremap &;( (<CR>);<Esc>O<Tab>
+	inoremap &,( (<CR>),<Esc>O<Tab>
 
 	" PHP
 	inoremap &th $this->
@@ -337,6 +345,7 @@ call s:setSerachingOptions()
 
 call s:setGenericKeyMaps()
 call s:setLeaderKeyMaps()
+call s:setCommandModeMaps()
 call s:setInsertModeMaps()
 call s:setSpecialKeyMaps()
 
