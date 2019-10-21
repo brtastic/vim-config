@@ -234,6 +234,9 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhf :History<CR>
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
+	
+	autocmd VimEnter * command! -bang -nargs=* Ag
+		\ call fzf#vim#ag(<q-args>, '--skip-vcs-ignores', <bang>0)
 
 	" TAGBAR
 	noremap <leader>y :TagbarToggle<CR>
@@ -243,7 +246,7 @@ function! s:setPluginOptions()
 	let g:tagbar_compact = 1
 
 	" ACK
-	let g:ackprg = 'ag --vimgrep'
+	let g:ackprg = 'ag -U --vimgrep'
 
 	" SMART WORD
 	map <leader>w  <Plug>(smartword-w)
