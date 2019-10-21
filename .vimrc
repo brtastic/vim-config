@@ -96,6 +96,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>r :call Enclose()<CR>
 	vnoremap <leader>a :'<,'>!column -t<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
+	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
 	nnoremap <leader>c :call RunAsCommand()<CR>
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
