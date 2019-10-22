@@ -135,7 +135,7 @@ function! s:setInsertModeMaps()
 	inoremap &prf <Esc>biprotected function <Esc>A() {<CR>}<Esc>k$F)i
 	inoremap &puf <Esc>bipublic function <Esc>A() {<CR>}<Esc>k$F)i
 	inoremap &prsf <Esc>biprotected static function <Esc>A() {<CR>}<Esc>k$F)i
-	inoremap &pusf <Esc>bipubilc static function <Esc>A() {<CR>}<Esc>k$F)i
+	inoremap &pusf <Esc>bipublic static function <Esc>A() {<CR>}<Esc>k$F)i
 
 	" PERL
 	inoremap &se $self->
