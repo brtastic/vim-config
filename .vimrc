@@ -148,7 +148,9 @@ function! s:setInsertModeMaps()
 	inoremap &tag <Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
 	inoremap &tc <Esc>F<ea class=""<Esc>i
 	inoremap &ts <Esc>F<f\>i style=""<Esc>i
-
+	
+	inoremap <c-p> <c-n>
+	inoremap <c-y> <c-p>
 	inoremap <s-Tab> <c-d>
 endfunction
 
