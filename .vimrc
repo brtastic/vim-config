@@ -29,7 +29,7 @@ function! s:setDisplayOptions()
 	"set wrap!
 	set display+=lastline
 	set visualbell
-	set termsize=10x0
+	set termsize=20x0
 endfunction
 
 " INDENTING AND EDITING
@@ -45,6 +45,7 @@ endfunction
 " SEARCHING
 function! s:setSerachingOptions()
 	set rtp+=~/.fzf
+	set matchpairs=<:>
 	set ignorecase
 	set smartcase
 endfunction
@@ -75,7 +76,7 @@ function! s:setGenericKeyMaps()
 	vnoremap K <nop>
 	nnoremap + o<Esc>
 	nnoremap - O<Esc>
-	nnoremap Q :rightbelow term<CR>
+	nnoremap Q :put =
 	noremap <silent> <c-u> @='15k'<CR>
 	noremap <silent> <c-d> @='15j'<CR>
 	noremap <silent> <c-b> @='30kzz'<CR>
@@ -87,14 +88,19 @@ endfunction
 " LEADER KEY BINDINGS
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
+	nnoremap <leader>oo :NERDTree ~/.vim/org<CR>
+	nnoremap <leader>op :call OpenFileAside("~/.vim/notes.vorg")<CR>
+	nnoremap <leader>q :rightbelow term<CR>
 	nnoremap <leader>x :Bw<CR>
 	nnoremap <leader>X :Bw!<CR>
 	nnoremap <leader>j J
+	nnoremap <leader>k K
 	vnoremap <leader>j J
+	vnoremap <leader>k K
 	nnoremap <leader>h :set hlsearch!<CR>
 	nnoremap <leader>\ :e $MYVIMRC<CR>
 	nnoremap <leader>r :call Enclose()<CR>
-	vnoremap <leader>a :'<,'>!column -t<CR>
+	nnoremap <leader>= :call TabularizeCursor()<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
 	nnoremap <leader>c :call RunAsCommand()<CR>
@@ -115,6 +121,10 @@ function! s:setCommandModeMaps()
 	cnoremap &pp <c-r><c-o>"
 	cnoremap &ft set filetype=
 	cnoremap &/ Ack! ""<left>
+
+	cnoremap &et2 set et ts=2 sw=2
+	cnoremap &et4 set et ts=4 sw=4
+	cnoremap &noet set et ts=3 sw=3
 endfunction
 
 " INSERT MODE BINDINGS
@@ -148,7 +158,7 @@ function! s:setInsertModeMaps()
 	inoremap &tag <Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
 	inoremap &tc <Esc>F<ea class=""<Esc>i
 	inoremap &ts <Esc>F<f\>i style=""<Esc>i
-	
+
 	inoremap <c-p> <c-n>
 	inoremap <c-y> <c-p>
 	inoremap <s-Tab> <c-d>
@@ -183,8 +193,6 @@ endfunction
 function! s:setCommands()
 	command! Rf :call RemoveFunction()
 	command! Cs :call CheckSyntax()
-	command! Commands :call OpenFileAside("~/.vim/commands")
-	command! Notes :call OpenFileAside("~/.vim/notes")
 	command! W :w
 endfunction
 
@@ -236,7 +244,7 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhf :History<CR>
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
-	
+
 	autocmd VimEnter * command! -bang -nargs=* Ag
 		\ call fzf#vim#ag(<q-args>, '--skip-vcs-ignores', <bang>0)
 
@@ -301,6 +309,11 @@ endfunction
 function! RunAsCommand()
 	let line = "!" . getline(".")
 	execute line
+endfunction
+
+function! TabularizeCursor()
+	let character = matchstr(getline('.'), '\%' . col('.') . 'c.')
+	exec ":Tab /" . character
 endfunction
 
 function! OpenFileAside(path)

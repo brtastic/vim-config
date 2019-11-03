@@ -17,4 +17,8 @@ git clone git@github.com:mileszs/ack.vim.git
 git clone git@github.com:tpope/vim-commentary.git
 git clone git@github.com:sumpygump/php-documentor-vim.git
 git clone git@github.com:tpope/vim-fugitive.git
+git clone git@github.com:brtastic/vorg.git
+git clone git@github.com:sheerun/vim-polyglot.git
+git clone git@github.com:tpope/vim-speeddating.git
+git clone git@github.com:godlygeek/tabular.git
 mv php-documentor-vim/ftplugin/php_documentor.vim php-documentor-vim/ftplugin/php.vim
