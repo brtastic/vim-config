@@ -45,9 +45,10 @@ endfunction
 " SEARCHING
 function! s:setSerachingOptions()
 	set rtp+=~/.fzf
-	set matchpairs=<:>
+	set matchpairs+=<:>
 	set ignorecase
 	set smartcase
+	set incsearch
 endfunction
 
 "------------
@@ -122,9 +123,9 @@ function! s:setCommandModeMaps()
 	cnoremap &ft set filetype=
 	cnoremap &/ Ack! ""<left>
 
-	cnoremap &et2 set et ts=2 sw=2
-	cnoremap &et4 set et ts=4 sw=4
-	cnoremap &noet set et ts=3 sw=3
+	cnoremap &s2 set et ts=2 sw=2<CR>
+	cnoremap &s4 set et ts=4 sw=4<CR>
+	cnoremap &t3 set et ts=3 sw=3<CR>
 endfunction
 
 " INSERT MODE BINDINGS
