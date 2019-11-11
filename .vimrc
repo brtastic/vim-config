@@ -13,6 +13,7 @@ function! s:setEditorOptions()
 	set nrformats-=octal
 	set tags=.ctags;$HOME
 	filetype plugin on
+	set sessionoptions-=options
 endfunction
 
 " DISPLAY
@@ -20,7 +21,7 @@ function! s:setDisplayOptions()
 	color gruvbox
 	set background=dark
 	syntax on
-	set listchars=tab:»\ ,space:·,trail:‼
+	set listchars=tab:»\ ,space:·,trail:‼,nbsp:◦
 	set list
 	set number
 	set relativenumber
@@ -30,14 +31,14 @@ function! s:setDisplayOptions()
 	set display+=lastline
 	set visualbell
 	set termsize=20x0
+	set wildmenu
 endfunction
 
 " INDENTING AND EDITING
 function! s:setEditingOptions()
 	set ts=3 sw=3 noet
-	"set ts=4 sw=4 et
-	"set ts=2 sw=2 et
 	set autoindent
+	set smarttab
 	set backspace=indent,eol,start
 	set encoding=utf-8
 endfunction
@@ -45,10 +46,10 @@ endfunction
 " SEARCHING
 function! s:setSerachingOptions()
 	set rtp+=~/.fzf
-	set matchpairs+=<:>
 	set ignorecase
 	set smartcase
 	set incsearch
+	set complete-=i
 endfunction
 
 "------------
@@ -57,11 +58,8 @@ endfunction
 
 " GENERAL KEYBINDINGS
 function! s:setGenericKeyMaps()
-	noremap <c-k> <Esc>
-	noremap! <c-k> <Esc>
 	noremap <c-c> <Esc>
 	noremap! <c-c> <Esc>
-	noremap! <c-j> <nop>
 
 	noremap c "_c
 	noremap cc "_S
@@ -71,6 +69,7 @@ function! s:setGenericKeyMaps()
 	noremap x "_x
 	noremap X "_X
 
+	nnoremap Y y$
 	nnoremap J :bprev<CR>
 	vnoremap J <nop>
 	nnoremap K :bnext<CR>
@@ -89,28 +88,28 @@ endfunction
 " LEADER KEY BINDINGS
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
-	nnoremap <leader>oo :NERDTree ~/.vim/org<CR>
-	nnoremap <leader>op :call OpenFileAside("~/.vim/notes.vorg")<CR>
-	nnoremap <leader>q :rightbelow term<CR>
-	nnoremap <leader>x :Bw<CR>
-	nnoremap <leader>X :Bw!<CR>
+	nnoremap <silent> <leader>oo :NERDTree ~/.vim/org<CR>
+	nnoremap <silent> <leader>op :call OpenFileAside("~/.vim/notes.vorg")<CR>
+	nnoremap <silent> <leader>q :rightbelow term<CR>
+	nnoremap <silent> <leader>x :Bw<CR>
+	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <leader>j J
 	nnoremap <leader>k K
 	vnoremap <leader>j J
 	vnoremap <leader>k K
-	nnoremap <leader>h :set hlsearch!<CR>
-	nnoremap <leader>\ :e $MYVIMRC<CR>
+	nnoremap <silent> <leader>h :set hlsearch!<CR>
+	nnoremap <silent> <leader>\ :e $MYVIMRC<CR>
 	nnoremap <leader>r :call Enclose()<CR>
-	nnoremap <leader>= :call TabularizeCursor()<CR>
+	nnoremap <silent> <leader>= :call TabularizeCursor()<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
-	nnoremap <leader>c :call RunAsCommand()<CR>
+	nnoremap <silent> <leader>c :call RunCommand(getline("."))<CR>
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
 	nnoremap <leader>sh :cd ~<CR>:pwd<CR>
-	nnoremap <leader>p :call PhpDoc()<CR>
-	nnoremap <leader>? :call LoadLanguageTags()<CR>
+	nnoremap <silent> <leader>p :call PhpDoc()<CR>
+	nnoremap <silent> <leader>? :call LoadLanguageTags()<CR>
 	vnoremap <leader>vz "+y
 	noremap <leader>vv "+p
 	noremap <leader>vV "+P
@@ -131,38 +130,38 @@ endfunction
 " INSERT MODE BINDINGS
 function! s:setInsertModeMaps()
 	inoremap &<Tab> &
-	inoremap &{ {<CR>}<Esc>O<Tab>
-	inoremap &;{ {<CR>};<Esc>O<Tab>
-	inoremap &,{ {<CR>},<Esc>O<Tab>
-	inoremap &[ [<CR>]<Esc>O<Tab>
-	inoremap &;[ [<CR>];<Esc>O<Tab>
-	inoremap &,[ [<CR>],<Esc>O<Tab>
-	inoremap &( (<CR>)<Esc>O<Tab>
-	inoremap &;( (<CR>);<Esc>O<Tab>
-	inoremap &,( (<CR>),<Esc>O<Tab>
+	inoremap &{ <c-g>u{<CR>}<Esc>O<Tab>
+	inoremap &;{ <c-g>u{<CR>};<Esc>O<Tab>
+	inoremap &,{ <c-g>u{<CR>},<Esc>O<Tab>
+	inoremap &[ <c-g>u[<CR>]<Esc>O<Tab>
+	inoremap &;[ <c-g>u[<CR>];<Esc>O<Tab>
+	inoremap &,[ <c-g>u[<CR>],<Esc>O<Tab>
+	inoremap &( <c-g>u(<CR>)<Esc>O<Tab>
+	inoremap &;( <c-g>u(<CR>);<Esc>O<Tab>
+	inoremap &,( <c-g>u(<CR>),<Esc>O<Tab>
 
-	" PHP
-	inoremap &th $this->
-	inoremap &prf <Esc>biprotected function <Esc>A() {<CR>}<Esc>k$F)i
-	inoremap &puf <Esc>bipublic function <Esc>A() {<CR>}<Esc>k$F)i
-	inoremap &prsf <Esc>biprotected static function <Esc>A() {<CR>}<Esc>k$F)i
-	inoremap &pusf <Esc>bipublic static function <Esc>A() {<CR>}<Esc>k$F)i
+	augroup vimrc_snippets
+		autocmd!
+		autocmd FileType php inoremap <buffer> &th <c-g>u$this->
+		autocmd FileType php inoremap <buffer> &prf <c-g>u<Esc>biprotected function <Esc>A() {<CR>}<Esc>k$F)i
+		autocmd FileType php inoremap <buffer> &pf <c-g>u<Esc>bipublic function <Esc>A() {<CR>}<Esc>k$F)i
+		autocmd FileType php inoremap <buffer> &prsf <c-g>u<Esc>biprotected static function <Esc>A() {<CR>}<Esc>k$F)i
+		autocmd FileType php inoremap <buffer> &psf <c-g>u<Esc>bipublic static function <Esc>A() {<CR>}<Esc>k$F)i
+		autocmd FileType php inoremap <buffer> &try <c-g>utry {<CR>}<CR>catch() {<CR>}<Esc>k0f(a
 
-	" PERL
-	inoremap &se $self->
-	inoremap &my my () = @_;<Esc>F)i
-	inoremap &moo has "" => (<CR>);<Esc>O<Tab>is => "rw",<Esc>k$F"i
-	inoremap &dd use Data::Dumper; print Dumper();<Esc>hi
-	inoremap &try try {<CR>} catch {<CR>};<Esc>kO<Tab>
+		autocmd FileType perl inoremap <buffer> &se <c-g>u$self->
+		autocmd FileType perl inoremap <buffer> &my <c-g>umy () = @_;<Esc>F)i
+		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "rw",<Esc>k$F"i
+		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; print Dumper();<Esc>hi
+		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>};<Esc>kO<Tab>
 
-	" HTML
-	inoremap &tag <Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
-	inoremap &tc <Esc>F<ea class=""<Esc>i
-	inoremap &ts <Esc>F<f\>i style=""<Esc>i
+		autocmd FileType html inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
+		autocmd FileType html inoremap <buffer> &tc <c-g>u<Esc>F<ea class=""<Esc>i
+		autocmd FileType html inoremap <buffer> &ts <c-g>u<Esc>F<f\>i style=""<Esc>i
+	augroup END
 
 	inoremap <c-p> <c-n>
 	inoremap <c-y> <c-p>
-	inoremap <s-Tab> <c-d>
 endfunction
 
 " SPECIAL KEY BINDINGS
@@ -171,10 +170,6 @@ function! s:setSpecialKeyMaps()
 	nnoremap <CR> i<CR><Esc>
 	tnoremap <c-k> <c-w>N
 	tnoremap <c-e> <c-w>Niexit<CR><c-w>N:q<CR>
-	nnoremap <End> <nop>
-	nnoremap <Home> <nop>
-	nnoremap <Insert> <nop>
-	nnoremap <Delete> <nop>
 
 	noremap  <Up> <c-w>>
 	noremap! <Up> <Esc>
@@ -192,20 +187,28 @@ endfunction
 
 " COMMANDS
 function! s:setCommands()
-	command! Rf :call RemoveFunction()
-	command! Cs :call CheckSyntax()
-	command! W :w
+	command! Rf call RemoveFunction()
+	command! Cs call CheckSyntax()
+	command! W w
+	command! Wq wq
 endfunction
 
 " AUTOCOMMANDS
 function! s:setAutocommands()
-	" auto fix trailing whitespaces
-	let g:fix_trail = 1
-	autocmd BufWritePre * :call BeforeSave()
+	augroup vimrc_autocommands
+		autocmd!
+		autocmd BufWritePre * call FixTrailingWhitespace()
 
-	" save cursor position
-	autocmd BufLeave * call AutoSaveWinView()
-	autocmd BufEnter * call AutoRestoreWinView()
+		" save cursor position
+		autocmd BufLeave * call AutoSaveWinView()
+		autocmd BufEnter * call AutoRestoreWinView()
+	augroup END
+endfunction
+
+function! s:loadLocalOptions()
+	if filereadable(expand("~/.vim/.vimrc"))
+		so ~/.vim/.vimrc
+	endif
 endfunction
 
 "-----------
@@ -216,13 +219,12 @@ function! s:setPluginOptions()
 	" NERDTREE
 	"autocmd VimEnter * NERDTreeVCS
 	"autocmd VimEnter * wincmd p
-	noremap <leader>t :NERDTreeVCS<CR>
-	noremap <leader>T :NERDTreeFind<CR>
+	noremap <silent> <leader>t :NERDTreeVCS<CR>
+	noremap <silent> <leader>T :NERDTreeFind<CR>
 	let g:NERDTreeMinimalUI = 1
 
 	" VDEBUG
 	let g:vdebug_options = {}
-	let g:vdebug_options["path_maps"] = {} " todo
 	let g:vdebug_options["break_on_open"] = 0
 
 	" AIRLINE
@@ -246,11 +248,10 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
 
-	autocmd VimEnter * command! -bang -nargs=* Ag
-		\ call fzf#vim#ag(<q-args>, '--skip-vcs-ignores', <bang>0)
+	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--skip-vcs-ignores', <bang>0)
 
 	" TAGBAR
-	noremap <leader>y :TagbarToggle<CR>
+	noremap <silent> <leader>y :TagbarToggle<CR>
 	let g:tagbar_map_showproto = "r"
 	let g:tagbar_map_jump = "o"
 	let g:tagbar_map_togglefold = "za"
@@ -284,6 +285,15 @@ function! RemoveFunction()
 	echom 'Function removed'
 endfunction
 
+function! RunCommand(command)
+	rightbelow new
+	resize -10
+	call append(0, split(system(a:command), "\n"))
+	setlocal nomodifiable buftype=nofile nobuflisted bufhidden=wipe
+	map <silent> <buffer> q :q<CR>
+	map <silent> <buffer> <CR> :q<CR>
+endfunction
+
 function! CheckSyntax()
 	let path = expand("%:p")
 	if &filetype ==# "php"
@@ -294,22 +304,12 @@ function! CheckSyntax()
 		echom "Unknown filetype"
 		return
 	endif
-	rightbelow new
-	resize -10
-	call append(0, system(command . path))
-	setlocal modifiable! buftype=nofile buflisted! bufhidden=wipe
-	map <buffer> q :q<CR>
-	map <buffer> <CR> :q<CR>
+	call RunCommand(command . path)
 endfunction
 
 function! LoadLanguageTags()
 	let file_location = "~/.vim/tags/" . &filetype
 	execute "set tags+=" . file_location
-endfunction
-
-function! RunAsCommand()
-	let line = "!" . getline(".")
-	execute line
 endfunction
 
 function! TabularizeCursor()
@@ -320,16 +320,14 @@ endfunction
 function! OpenFileAside(path)
 	execute "rightbelow split " . a:path
 	resize -10
-	setlocal buftype=nofile buflisted! bufhidden=wipe
-	map <buffer>q :set buftype=<CR>:wq<CR>
+	setlocal buftype=nofile nobuflisted bufhidden=wipe
+	map <silent> <buffer>q :set buftype=<CR>:wq<CR>
 endfunction
 
-function! BeforeSave()
-	if g:fix_trail
-		let l:view = winsaveview()
-		%s/\s\+$//ge
-		call winrestview(l:view)
-	endif
+function! FixTrailingWhitespace()
+	let l:view = winsaveview()
+	%s/\s\+$//ge
+	call winrestview(l:view)
 endfunction
 
 function! AutoSaveWinView()
@@ -373,3 +371,4 @@ call s:setCommands()
 call s:setAutocommands()
 
 call s:setPluginOptions()
+call s:loadLocalOptions()
