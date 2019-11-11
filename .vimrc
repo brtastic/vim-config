@@ -69,6 +69,8 @@ function! s:setGenericKeyMaps()
 	noremap x "_x
 	noremap X "_X
 
+	nnoremap ' `
+	nnoremap ` '
 	nnoremap Y y$
 	nnoremap <silent> J :bprev<CR>
 	vnoremap J <nop>
@@ -201,6 +203,7 @@ function! s:setAutocommands()
 	augroup vimrc_autocommands
 		autocmd!
 		autocmd BufWritePre * call FixTrailingWhitespace()
+		autocmd BufWritePre * call FixTrailingNewline()
 
 		" save cursor position
 		autocmd BufLeave * call AutoSaveWinView()
@@ -299,15 +302,16 @@ endfunction
 
 function! CheckSyntax()
 	let path = expand("%:p")
-	if &filetype ==# "php"
-		let command = "php -l "
-	elseif &filetype ==# "perl"
-		let command = "perl -c "
-	else
+	let commands = {
+		\"php": "php -l",
+		\"perl": "perl -c",
+	\}
+	let command = get(commands, &filetype, "")
+	if !strlen(command)
 		echom "Unknown filetype"
 		return
 	endif
-	call RunCommand(command . path)
+	call RunCommand(command . " " . path)
 endfunction
 
 function! LoadLanguageTags()
@@ -328,9 +332,20 @@ function! OpenFileAside(path)
 endfunction
 
 function! FixTrailingWhitespace()
-	let l:view = winsaveview()
+	let view = winsaveview()
 	%s/\s\+$//ge
-	call winrestview(l:view)
+	call winrestview(view)
+endfunction
+
+function! FixTrailingNewline()
+	let view = winsaveview()
+	let lastline = line("$")
+	while getline(lastline) =~ '^\s*$'
+		execute lastline . "," . lastline . "delete"
+		let lastline = line("$")
+	endwhile
+	call append(lastline, "")
+	call winrestview(view)
 endfunction
 
 function! AutoSaveWinView()
@@ -375,3 +390,4 @@ call s:setAutocommands()
 
 call s:setPluginOptions()
 call s:loadLocalOptions()
+
