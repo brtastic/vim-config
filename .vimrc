@@ -70,9 +70,9 @@ function! s:setGenericKeyMaps()
 	noremap X "_X
 
 	nnoremap Y y$
-	nnoremap J :bprev<CR>
+	nnoremap <silent> J :bprev<CR>
 	vnoremap J <nop>
-	nnoremap K :bnext<CR>
+	nnoremap <silent> K :bnext<CR>
 	vnoremap K <nop>
 	nnoremap + o<Esc>
 	nnoremap - O<Esc>
@@ -158,6 +158,9 @@ function! s:setInsertModeMaps()
 		autocmd FileType html inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
 		autocmd FileType html inoremap <buffer> &tc <c-g>u<Esc>F<ea class=""<Esc>i
 		autocmd FileType html inoremap <buffer> &ts <c-g>u<Esc>F<f\>i style=""<Esc>i
+		autocmd FileType html.twig inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
+		autocmd FileType html.twig inoremap <buffer> &tc <c-g>u<Esc>F<ea class=""<Esc>i
+		autocmd FileType html.twig inoremap <buffer> &ts <c-g>u<Esc>F<f\>i style=""<Esc>i
 	augroup END
 
 	inoremap <c-p> <c-n>
@@ -167,7 +170,7 @@ endfunction
 " SPECIAL KEY BINDINGS
 function! s:setSpecialKeyMaps()
 	nnoremap <Space> <c-w><c-w>
-	nnoremap <CR> i<CR><Esc>
+	nnoremap go i<CR><Esc>
 	tnoremap <c-k> <c-w>N
 	tnoremap <c-e> <c-w>Niexit<CR><c-w>N:q<CR>
 
