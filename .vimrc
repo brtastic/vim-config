@@ -273,10 +273,11 @@ function! s:setPluginOptions()
 
 	" SIMPLE WORKSPACE
 	let g:simplews_short_commands = 0
-	
+
 	" COMMENTARY
 	nmap Q gcc
 	vmap Q gc
+
 endfunction
 
 "--------------------
@@ -344,7 +345,7 @@ function! FixTrailingNewline()
 	let view = winsaveview()
 	let lastline = line("$")
 	while getline(lastline) =~ '^\s*$'
-		execute lastline . "," . lastline . "delete"
+		execute lastline . "delete _"
 		let lastline = line("$")
 	endwhile
 	call append(lastline, "")
