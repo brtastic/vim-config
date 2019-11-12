@@ -275,8 +275,8 @@ function! s:setPluginOptions()
 	let g:simplews_short_commands = 0
 	
 	" COMMENTARY
-	nnoremap Q gcc
-	vnoremap Q gc
+	nmap Q gcc
+	vmap Q gc
 endfunction
 
 "--------------------
