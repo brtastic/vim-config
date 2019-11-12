@@ -342,14 +342,17 @@ function! FixTrailingWhitespace()
 endfunction
 
 function! FixTrailingNewline()
-	let view = winsaveview()
 	let lastline = line("$")
-	while getline(lastline) =~ '^\s*$'
-		execute lastline . "delete _"
-		let lastline = line("$")
+	let curline = lastline
+	while curline > 0 && foldlevel(curline) == 0 && getline(curline) =~ '^\s*$'
+		let curline -= 1
 	endwhile
-	call append(lastline, "")
-	call winrestview(view)
+	let curline += 2
+	if curline <= lastline
+		let view = winsaveview()
+		execute curline . "," . lastline . "delete _"
+		call winrestview(view)
+	endif
 endfunction
 
 function! AutoSaveWinView()
