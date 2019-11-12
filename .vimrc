@@ -78,7 +78,6 @@ function! s:setGenericKeyMaps()
 	vnoremap K <nop>
 	nnoremap + o<Esc>
 	nnoremap - O<Esc>
-	nnoremap Q :put =
 	noremap <silent> <c-u> @='15k'<CR>
 	noremap <silent> <c-d> @='15j'<CR>
 	noremap <silent> <c-b> @='30kzz'<CR>
@@ -274,6 +273,10 @@ function! s:setPluginOptions()
 
 	" SIMPLE WORKSPACE
 	let g:simplews_short_commands = 0
+	
+	" COMMENTARY
+	nnoremap Q gcc
+	vnoremap Q gc
 endfunction
 
 "--------------------
