@@ -30,7 +30,6 @@ function! s:setDisplayOptions()
 	"set wrap!
 	set display+=lastline
 	set visualbell
-	set termsize=20x0
 	set wildmenu
 endfunction
 
