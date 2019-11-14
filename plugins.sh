@@ -13,7 +13,7 @@ git clone git@github.com:vim-airline/vim-airline.git
 git clone git@github.com:moll/vim-bbye.git
 git clone git@github.com:morhetz/gruvbox.git
 git clone git@github.com:kana/vim-smartword.git
-git clone git@github.com:mileszs/ack.vim.git
+git clone git@github.com:eugen0329/vim-esearch.git
 git clone git@github.com:tpope/vim-commentary.git
 git clone git@github.com:sumpygump/php-documentor-vim.git
 git clone git@github.com:tpope/vim-fugitive.git

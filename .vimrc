@@ -120,11 +120,10 @@ function! s:setCommandModeMaps()
 	cnoremap &br BreakpointR *<CR>
 	cnoremap &pp <c-r><c-o>"
 	cnoremap &ft set filetype=
-	cnoremap &/ Ack! ""<left>
 
 	cnoremap &s2 set et ts=2 sw=2<CR>
 	cnoremap &s4 set et ts=4 sw=4<CR>
-	cnoremap &t3 set et ts=3 sw=3<CR>
+	cnoremap &t3 set noet ts=3 sw=3<CR>
 endfunction
 
 " INSERT MODE BINDINGS
@@ -252,7 +251,7 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
 
-	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--skip-vcs-ignores', <bang>0)
+	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
 	" TAGBAR
 	noremap <silent> <leader>y :TagbarToggle<CR>
@@ -261,8 +260,16 @@ function! s:setPluginOptions()
 	let g:tagbar_map_togglefold = "za"
 	let g:tagbar_compact = 1
 
-	" ACK
-	let g:ackprg = 'ag -U --vimgrep'
+	" ESEARCH
+	let g:esearch = {
+		\"adapter": "ag",
+		\"backend": "vim8",
+		\"out": "win",
+		\"batch_size": 500,
+		\"use": ["visual"],
+		\"default_mappings": 1,
+	\}
+	call esearch#map("<leader>fr", "esearch")
 
 	" SMART WORD
 	map <leader>w  <Plug>(smartword-w)
@@ -291,7 +298,7 @@ endfunction
 
 function! RemoveFunction()
 	execute "normal \"zyi)da)bdw\"zP"
-	echom 'Function removed'
+	echom "Function removed"
 endfunction
 
 function! RunCommand(command)
