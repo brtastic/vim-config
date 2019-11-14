@@ -232,7 +232,6 @@ function! s:setPluginOptions()
 
 	" AIRLINE
 	let g:airline#extensions#tabline#enabled = 1
-	let g:airline#extensions#tagbar#enabled = 1
 	let g:airline_section_b = '%{strftime("%H:%M")}'
 	let g:airline_section_x = ''
 
@@ -242,6 +241,7 @@ function! s:setPluginOptions()
 	" FZF
 	nnoremap <leader>ff :Files<CR>
 	nnoremap <leader>ft :Tags<CR>
+	nnoremap <leader>y :BTags<CR>
 	nnoremap <leader>fl :Lines<CR>
 	nnoremap <leader>fb :Buffers<CR>
 	nnoremap <leader>fm :Marks<CR>
@@ -251,14 +251,10 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
 
-	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
+  nmap <leader><tab> <plug>(fzf-maps-n)
+  imap <c-f> <plug>(fzf-complete-line)
 
-	" TAGBAR
-	noremap <silent> <leader>y :TagbarToggle<CR>
-	let g:tagbar_map_showproto = "r"
-	let g:tagbar_map_jump = "o"
-	let g:tagbar_map_togglefold = "za"
-	let g:tagbar_compact = 1
+	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
 	" ESEARCH
 	let g:esearch = {
