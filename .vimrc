@@ -251,8 +251,8 @@ function! s:setPluginOptions()
 	nnoremap <leader>fhc :History:<CR>
 	nnoremap <leader>fhe :History/<CR>
 
-  nmap <leader><tab> <plug>(fzf-maps-n)
-  imap <c-f> <plug>(fzf-complete-line)
+	nmap <leader><tab> <plug>(fzf-maps-n)
+	imap <c-f> <plug>(fzf-complete-line)
 
 	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
@@ -279,6 +279,9 @@ function! s:setPluginOptions()
 	" COMMENTARY
 	nmap Q gcc
 	vmap Q gc
+
+	" JSONVIEWER
+	command! Jv call jsonviewer#init()
 
 endfunction
 
