@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+SESSION_NAME=vimws
+WIN0="${SESSION_NAME}:0"
+WIN1="${SESSION_NAME}:1"
+
+tmux start-server
+tmux kill-session -t $SESSION_NAME
+
+if [ "$TMUX" = "" ]; then
+	set -- $(stty size)
+	tmux new-session -d -n 'Vim' -s $SESSION_NAME -x "$2" -y "$(($1 - 1))"
+else
+	WIN0=9
+	WIN1=10
+	tmux new-window -t $WIN0 -n 'Vim'
+fi
+
+tmux new-window -t $WIN1 -n 'Utility'
+
+tmux select-window -t $WIN0
+tmux send-keys "cd ~/dox && clear && vim" C-m
+
+tmux select-window -t $WIN1
+tmux send-keys "cd ~ && clear" C-m
+tmux select-pane -t 0
+tmux split-window -v -p55
+tmux select-pane -t 0
+tmux split-window -h -p50
+tmux send-keys "cd ~ && clear" C-m
+
+tmux select-pane -t 2
+tmux send-keys "htop" C-m
+tmux select-pane -t 0
+
+tmux select-window -t $WIN0
+
+if [ "$TMUX" = "" ]; then
+	tmux attach -t $SESSION_NAME
+fi
