@@ -1,0 +1,14 @@
+urxvt-256color*termName: screen-256color
+urxvt-256color*geometry: 100x30
+urxvt-256color*depth: 32
+urxvt-256color*background: rgba:0000/0000/0000/dddd
+urxvt-256color*shading: 50
+urxvt-256color*foreground: #ffffff
+urxvt-256color*loginShell: true
+urxvt-256color*scrollBar: false
+urxvt-256color*skipScroll: true
+urxvt-256color*font: xft:Droid Sans Mono:pixelsize=14:antialias=true:hinting=true
+urxvt-256color*boldFont: xft:Droid Sans Mono:pixelsize=14:antialias=true:hinting=true
+urxvt-256color*lineSpace: 1
+urxvt-256color*title: Terminal
+urxvt-256color*skipBuiltinGlyphs: true
