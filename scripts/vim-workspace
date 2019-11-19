@@ -5,14 +5,18 @@ WIN0="${SESSION_NAME}:0"
 WIN1="${SESSION_NAME}:1"
 
 tmux start-server
-tmux kill-session -t $SESSION_NAME
 
 if [ "$TMUX" = "" ]; then
-	set -- $(stty size)
-	tmux new-session -d -n 'Vim' -s $SESSION_NAME -x "$2" -y "$(($1 - 1))"
+	tmux has-session -t $SESSION_NAME
+	if [ $? = 0 ]; then
+		tmux attach-session -t $SESSION_NAME
+		exit 0
+	else
+		set -- $(stty size)
+		tmux new-session -d -n 'Vim' -s $SESSION_NAME -x "$2" -y "$(($1 - 1))"
+	fi
 else
-	WIN0=9
-	WIN1=10
+	tmux rename-session $SESSION_NAME
 	tmux new-window -t $WIN0 -n 'Vim'
 fi
 
