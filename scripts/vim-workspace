@@ -27,14 +27,14 @@ tmux send-keys "cd ~/dox && clear && vim" C-m
 
 tmux select-window -t $WIN1
 tmux select-pane -t 0
-tmux split-window -h -p50
 tmux send-keys "cd ~ && clear" C-m
 tmux split-window -v -p50
+tmux clock-mode
+tmux select-pane -t 0
+tmux split-window -h -p50
 tmux send-keys "cd ~ && clear" C-m
 
 tmux select-pane -t 0
-tmux send-keys "clear && vim ~/.vim/org" C-m
-tmux select-pane -t 1
 
 tmux select-window -t $WIN0
 
