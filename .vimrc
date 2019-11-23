@@ -89,8 +89,8 @@ endfunction
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
 	nnoremap <silent> <leader>oo :NERDTree ~/.vim/org<CR>
-	nnoremap <silent> <leader>op :call OpenFileAside("~/.vim/notes.vorg")<CR>
-	nnoremap <silent> <leader>q :rightbelow term<CR>
+	nnoremap <silent> <leader>op :call AvoidNerdTree(":call OpenFileAside(\"~/.vim/notes.vorg\")")<CR>
+	nnoremap <silent> <leader>q :call AvoidNerdTree(":rightbelow term")<CR>
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <leader>j J
@@ -98,7 +98,7 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>j J
 	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
-	nnoremap <silent> <leader>\ :e $MYVIMRC<CR>
+	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
 	nnoremap <leader>r :call Enclose()<CR>
 	nnoremap <silent> <leader>= :call TabularizeCursor()<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
@@ -239,17 +239,17 @@ function! s:setPluginOptions()
 	let g:gutentags_ctags_tagfile = ".ctags"
 
 	" FZF
-	nnoremap <leader>ff :Files<CR>
-	nnoremap <leader>ft :Tags<CR>
-	nnoremap <leader>y :BTags<CR>
-	nnoremap <leader>fl :Lines<CR>
-	nnoremap <leader>fb :Buffers<CR>
-	nnoremap <leader>fm :Marks<CR>
-	nnoremap <leader>fc :Commits<CR>
-	nnoremap <leader>fC :BCommits<CR>
-	nnoremap <leader>fhf :History<CR>
-	nnoremap <leader>fhc :History:<CR>
-	nnoremap <leader>fhe :History/<CR>
+	nnoremap <leader>ff :call AvoidNerdTree(":Files")<CR>
+	nnoremap <leader>ft :call AvoidNerdTree(":Tags")<CR>
+	nnoremap <leader>y :call AvoidNerdTree(":BTags")<CR>
+	nnoremap <leader>fl :call AvoidNerdTree(":Lines")<CR>
+	nnoremap <leader>fb :call AvoidNerdTree(":Buffers")<CR>
+	nnoremap <leader>fm :call AvoidNerdTree(":Marks")<CR>
+	nnoremap <leader>fc :call AvoidNerdTree(":Commits")<CR>
+	nnoremap <leader>fC :call AvoidNerdTree(":BCommits")<CR>
+	nnoremap <leader>fhf :call AvoidNerdTree(":History")<CR>
+	nnoremap <leader>fhc :call AvoidNerdTree(":History:")<CR>
+	nnoremap <leader>fhe :call AvoidNerdTree(":History/")<CR>
 
 	nmap <leader><tab> <plug>(fzf-maps-n)
 	imap <c-f> <plug>(fzf-complete-line)
@@ -358,6 +358,13 @@ function! FixTrailingNewline()
 		execute curline . "," . lastline . "delete _"
 		call winrestview(view)
 	endif
+endfunction
+
+function! AvoidNerdTree(comm)
+	if exists("b:NERDTree")
+		execute "normal \<c-w>w"
+	endif
+	execute a:comm
 endfunction
 
 function! AutoSaveWinView()
