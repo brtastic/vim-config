@@ -24,7 +24,7 @@ git clone git@github.com:kana/vim-smartword.git
 git clone git@github.com:sumpygump/php-documentor-vim.git
 git clone git@github.com:brtastic/vim-simple-workspace.git
 git clone git@github.com:brtastic/vorg.git
-git clone git@github.com:brtastic/jsonviewer.git
+git clone git@github.com:brtastic/vim-jsonviewer.git
 git clone git@github.com:tpope/vim-speeddating.git
 git clone git@github.com:godlygeek/tabular.git
 
