@@ -4,16 +4,16 @@
 cd ~/.vim/bundle
 
 # Must have
-git clone git@github.com:ludovicchabant/vim-gutentags.git
-git clone git@github.com:universal-ctags/ctags.git
 git clone git@github.com:junegunn/fzf.git
 git clone git@github.com:junegunn/fzf.vim.git
 git clone git@github.com:scrooloose/nerdtree.git
 git clone git@github.com:moll/vim-bbye.git
-git clone git@github.com:vim-airline/vim-airline.git
+git clone git@github.com:morhetz/gruvbox.git
 
 # Nice to have
-git clone git@github.com:morhetz/gruvbox.git
+git clone git@github.com:ludovicchabant/vim-gutentags.git
+git clone git@github.com:universal-ctags/ctags.git
+git clone git@github.com:vim-airline/vim-airline.git
 git clone git@github.com:eugen0329/vim-esearch.git
 git clone git@github.com:sheerun/vim-polyglot.git
 git clone git@github.com:tpope/vim-commentary.git

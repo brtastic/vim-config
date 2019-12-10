@@ -16,21 +16,25 @@ function! s:setEditorOptions()
 	set sessionoptions-=options
 endfunction
 
-" DISPLAY
-function! s:setDisplayOptions()
+function! s:setColorSchemeOptions()
 	color gruvbox
 	set background=dark
+	let g:gruvbox_termcolors=16
+	let g:gruvbox_invert_selection=0
+endfunction
+
+" DISPLAY
+function! s:setDisplayOptions()
 	syntax on
 	set listchars=tab:»\ ,space:·,trail:‼,nbsp:◦
-	set list
-	set number
-	set relativenumber
+	set nolist
 	set scrolloff=2
 	set sidescrolloff=5
-	"set wrap!
+	set nowrap
 	set display+=lastline
-	set visualbell
 	set wildmenu
+	au VimEnter * set laststatus=0
+	au VimEnter * set showtabline=0
 endfunction
 
 " INDENTING AND EDITING
@@ -104,6 +108,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
 	nnoremap <silent> <leader>c :call RunCommand(getline("."))<CR>
+	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
@@ -219,6 +224,7 @@ endfunction
 "-----------
 
 function! s:setPluginOptions()
+
 	" NERDTREE
 	"autocmd VimEnter * NERDTreeVCS
 	"autocmd VimEnter * wincmd p
@@ -233,10 +239,11 @@ function! s:setPluginOptions()
 	" AIRLINE
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline_section_b = '%{strftime("%H:%M")}'
-	let g:airline_section_x = ''
+	let g:airline_section_x = '%{gutentags#statusline()}'
 
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
+	let g:gutentags_enabled = 0
 
 	" FZF
 	nnoremap <leader>ff :call AvoidNerdTree(":Files")<CR>
@@ -386,6 +393,15 @@ function! AutoRestoreWinView()
 	endif
 endfunction
 
+function! SwapIdeMode()
+	set number!
+	set relativenumber!
+	set list!
+	let &showtabline = 2 - &showtabline
+	let &laststatus = 2 - &laststatus
+	let g:gutentags_enabled = 1 - g:gutentags_enabled
+endfunction
+
 "-----------------
 "- CONFIGURATION -
 "-----------------
@@ -394,6 +410,7 @@ execute pathogen#infect()
 let mapleader = ","
 
 call s:setEditorOptions()
+call s:setColorSchemeOptions()
 call s:setDisplayOptions()
 call s:setEditingOptions()
 call s:setSerachingOptions()
@@ -409,4 +426,3 @@ call s:setAutocommands()
 
 call s:setPluginOptions()
 call s:loadLocalOptions()
-
