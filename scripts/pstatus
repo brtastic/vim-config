@@ -26,12 +26,39 @@ GetOptions(
 
 sub time_module {
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
-	my $weekday = [qw(Monday Tuesday Wednesday Thursday Friday Saturday Sunday)]->[$wday - 1];
 	my $clock_symbol = "";
-	return sprintf("$clock_symbol %02d:%02d, %s", $hour, $min, $weekday);
+
+	return sprintf("$clock_symbol %02d:%02d", $hour, $min);
+}
+
+sub calendar_module {
+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
+	my $weekday = [qw(Mon Tue Wed Thu Fri Sat Sun)]->[$wday - 1];
+	my $calendar_symbol = "";
+
+	return "$calendar_symbol $mday, $weekday";
+}
+
+sub uptime_module {
+	my $uptime = "/proc/uptime";
+	my $uptime_symbol = "";
+	my $upsec = do {
+		open my $fh, "<", $uptime;
+		my $line = readline $fh;
+		chomp $line;
+		my ($up, $idle) = split "\s", $line;
+		$up;
+	};
+
+	my $days = int($upsec / 60 / 60 / 24);
+	my $hours = int($upsec / 60 / 60) % 24;
+	my $days_string = $days > 0 ? $days . "d " : "";
+
+	return "$uptime_symbol $days_string${hours}h";
 }
 
 sub battery_module {
+	return unless $args{battery};
 	my $battery = "/sys/class/power_supply/$args{battery}";
 	my @battery_levels = ("", "", "", "");
 	my $battery_charging = "";
@@ -55,12 +82,13 @@ sub battery_module {
 			$level = $battery_levels[$result > 3 ? $result - 3 : 0];
 		}
 
-		return "$level $percent%";
+		return "$level $percent";
 	}
 	return "$battery_levels[0] ?";
 }
 
 sub sound_module {
+	return unless $args{sound_device};
 	my $soundcmd = "amixer -M sget $args{sound_device}";
 	my @sound_levels = ("", "", "");
 	my $ret = `$soundcmd`;
@@ -69,7 +97,7 @@ sub sound_module {
 		if ($ret =~ /$sources[0]: playback (?:.*?) \[(\d+)%\] (?:.*?) \[on\]$/im) {
 			my $percent = $1;
 			my $level = $sound_levels[int(($percent - 1) / 100 * @sound_levels)];
-			return "$level $percent%";
+			return "$level $percent";
 		}
 	}
 	return "$sound_levels[0] ?";
@@ -77,7 +105,7 @@ sub sound_module {
 
 sub ram_module {
 	my $meminfo = "/proc/meminfo";
-	my $ram_indicator = "";
+	my $ram_indicator = "";
 
 	if (-f $meminfo) {
 		my $data = do {
@@ -94,8 +122,8 @@ sub ram_module {
 			\%data;
 		};
 		if (scalar keys(%$data) == 4) {
-			my $level = int(100 * ($data->{MemTotal} - $data->{MemFree} - $data->{Buffers} - $data->{Cached}) / $data->{MemTotal});
-			return "$ram_indicator $level%";
+			my $level = int(1000 * ($data->{MemTotal} - $data->{MemFree} - $data->{Buffers} - $data->{Cached}) / $data->{MemTotal}) / 10;
+			return "$ram_indicator $level";
 		}
 
 	}
@@ -108,14 +136,12 @@ while (1) {
 		if (!defined) {
 			@modules = \(&battery_module, &sound_module, &ram_module);
 		} elsif (/time/) {
-			@modules = \(&time_module);
+			@modules = \(&time_module, &calendar_module, &uptime_module);
 		}
 	}
 
 	my $compiled = do {
-		my @list = map {
-			$_->();
-		} @modules;
+		my @list = grep { defined } map { $_->() } @modules;
 
 		join " $args{separator} ", @list;
 	};
