@@ -33,8 +33,9 @@ function! s:setDisplayOptions()
 	set nowrap
 	set display+=lastline
 	set wildmenu
+	set ruler
 	au VimEnter * set laststatus=0
-	au VimEnter * set showtabline=0
+	au VimEnter * set showtabline=1
 endfunction
 
 " INDENTING AND EDITING
@@ -93,8 +94,6 @@ endfunction
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
 	nnoremap <silent> <leader>oo :NERDTree ~/.vim/org<CR>
-	nnoremap <silent> <leader>op :call AvoidNerdTree(":call OpenFileAside(\"~/.vim/notes.vorg\")")<CR>
-	nnoremap <silent> <leader>q :call AvoidNerdTree(":rightbelow term")<CR>
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <leader>j J
@@ -104,7 +103,6 @@ function! s:setLeaderKeyMaps()
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
 	nnoremap <leader>r :call Enclose()<CR>
-	nnoremap <silent> <leader>= :call TabularizeCursor()<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
 	nnoremap <silent> <leader>c :call RunCommand(getline("."))<CR>
@@ -112,9 +110,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
-	nnoremap <leader>sh :cd ~<CR>:pwd<CR>
 	nnoremap <silent> <leader>p :call PhpDoc()<CR>
-	nnoremap <silent> <leader>? :call LoadLanguageTags()<CR>
 	vnoremap <leader>vz "+y
 	noremap <leader>vv "+p
 	noremap <leader>vV "+P
@@ -122,7 +118,6 @@ endfunction
 
 " COMMAND MODE BINDINGS
 function! s:setCommandModeMaps()
-	cnoremap &br BreakpointR *<CR>
 	cnoremap &pp <c-r><c-o>"
 	cnoremap &ft set filetype=
 
@@ -160,11 +155,7 @@ function! s:setInsertModeMaps()
 		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>};<Esc>kO<Tab>
 
 		autocmd FileType html inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
-		autocmd FileType html inoremap <buffer> &tc <c-g>u<Esc>F<ea class=""<Esc>i
-		autocmd FileType html inoremap <buffer> &ts <c-g>u<Esc>F<f\>i style=""<Esc>i
 		autocmd FileType html.twig inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
-		autocmd FileType html.twig inoremap <buffer> &tc <c-g>u<Esc>F<ea class=""<Esc>i
-		autocmd FileType html.twig inoremap <buffer> &ts <c-g>u<Esc>F<f\>i style=""<Esc>i
 	augroup END
 
 	inoremap <c-p> <c-n>
@@ -175,17 +166,11 @@ endfunction
 function! s:setSpecialKeyMaps()
 	nnoremap <Space> <c-w><c-w>
 	nnoremap go i<CR><Esc>
-	tnoremap <c-k> <c-w>N
-	tnoremap <c-e> <c-w>Niexit<CR><c-w>N:q<CR>
 
 	noremap  <Up> <c-w>>
 	noremap! <Up> <Esc>
 	noremap  <Down> <c-w><
 	noremap! <Down> <Esc>
-	noremap  <S-Up> <c-w>+
-	noremap! <S-Up> <Esc>
-	noremap  <S-Down> <c-w>-
-	noremap! <S-Down> <Esc>
 endfunction
 
 "------------
@@ -226,8 +211,6 @@ endfunction
 function! s:setPluginOptions()
 
 	" NERDTREE
-	"autocmd VimEnter * NERDTreeVCS
-	"autocmd VimEnter * wincmd p
 	noremap <silent> <leader>t :NERDTreeVCS<CR>
 	noremap <silent> <leader>T :NERDTreeFind<CR>
 	let g:NERDTreeMinimalUI = 1
@@ -330,23 +313,6 @@ function! CheckSyntax()
 	call RunCommand(command . " " . path)
 endfunction
 
-function! LoadLanguageTags()
-	let file_location = "~/.vim/tags/" . &filetype
-	execute "set tags+=" . file_location
-endfunction
-
-function! TabularizeCursor()
-	let character = matchstr(getline('.'), '\%' . col('.') . 'c.')
-	exec ":Tab /" . character
-endfunction
-
-function! OpenFileAside(path)
-	execute "rightbelow split " . a:path
-	resize -10
-	setlocal buftype=nofile nobuflisted bufhidden=wipe
-	map <silent> <buffer>q :set buftype=<CR>:wq<CR>
-endfunction
-
 function! FixTrailingWhitespace()
 	let view = winsaveview()
 	%s/\s\+$//ge
@@ -394,12 +360,23 @@ function! AutoRestoreWinView()
 endfunction
 
 function! SwapIdeMode()
-	set number!
-	set relativenumber!
-	set list!
-	let &showtabline = 2 - &showtabline
-	let &laststatus = 2 - &laststatus
-	let g:gutentags_enabled = 1 - g:gutentags_enabled
+	if exists("g:ide_mode") && g:ide_mode
+		let g:ide_mode = 0
+		windo set nonumber
+		windo set norelativenumber
+		windo set nolist
+		set showtabline=1
+		set laststatus=0
+		let g:gutentags_enabled = 0
+	else
+		let g:ide_mode = 1
+		windo set number
+		windo set relativenumber
+		windo set list
+		set showtabline=2
+		set laststatus=2
+		let g:gutentags_enabled = 1
+	endif
 endfunction
 
 "-----------------
