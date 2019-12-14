@@ -7,7 +7,7 @@ setxkbmap -option caps:backspace,shift:both_capslock
 # caps lock repat
 xset r 66
 
-feh --bg-scale ~/pic/wallpaper.jpg
+feh --bg-scale /usr/share/wallpapers/wallpaper.jpg
 xcompmgr &
 
 pkill -u $USER -f ^perl.*pstatus

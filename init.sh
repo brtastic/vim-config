@@ -3,7 +3,7 @@
 # Set up environment
 
 sudo zypper update
-sudo zypper install gmp-devel xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh compton tree ctags htop the_silver_searcher xbindkeys perl-App-perlbrew vivaldi-stable MozillaThunderbird telegram-desktop thunar thunar-plugin-archive file-roller ristretto xfce4-screenshooter
+sudo zypper install gmp-devel xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh compton tree ctags htop the_silver_searcher xbindkeys perl-App-perlbrew vivaldi-stable MozillaThunderbird telegram-desktop thunar thunar-plugin-archive file-roller ristretto xfce4-screenshooter stalonetray
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/

@@ -114,6 +114,8 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>vz "+y
 	noremap <leader>vv "+p
 	noremap <leader>vV "+P
+	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
+
 endfunction
 
 " COMMAND MODE BINDINGS
