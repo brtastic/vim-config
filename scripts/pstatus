@@ -46,7 +46,7 @@ sub uptime_module {
 		open my $fh, "<", $uptime;
 		my $line = readline $fh;
 		chomp $line;
-		my ($up, $idle) = split "\s", $line;
+		my ($up, $idle) = split /\s/, $line;
 		$up;
 	};
 
@@ -93,8 +93,8 @@ sub sound_module {
 	my @sound_levels = ("", "", "");
 	my $ret = `$soundcmd`;
 	if ($? == 0 && $ret =~ /playback channels: (.*?)$/im) {
-		my @sources = split /\W/, $1;
-		if ($ret =~ /$sources[0]: playback (?:.*?) \[(\d+)%\] (?:.*?) \[on\]$/im) {
+		my @sources = map { s#^\s*|\s*$##gr } split /-/, $1;
+		if ($ret =~ /$sources[0]: playback (?:.*?) \[(\d+)%\](?:.*?) \[on\]$/im) {
 			my $percent = $1;
 			my $level = $sound_levels[int(($percent - 1) / 100 * @sound_levels)];
 			return "$level $percent";
