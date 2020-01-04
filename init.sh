@@ -3,7 +3,7 @@
 # Set up environment
 
 sudo zypper update
-sudo zypper install gmp-devel xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh compton tree ctags htop the_silver_searcher xbindkeys perl-App-perlbrew vivaldi-stable MozillaThunderbird telegram-desktop file-roller stalonetray gimp ranger screenshot-tool nomacs
+sudo zypper install gmp-devel patch xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh compton tree ctags htop the_silver_searcher xbindkeys vivaldi-stable MozillaThunderbird telegram-desktop file-roller stalonetray gimp ranger screenshot-tool nomacs
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
@@ -28,6 +28,10 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 git config --global core.excludesfile ~/.gitignore
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
+
+\curl -L https://install.perlbrew.pl | bash
+echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
+echo "export FZF_DEFAULT_COMMAND='ag -l \"\"'" >> ~/.bashrc
 
 sudo ln -s ~/config/scripts/pstatus /usr/local/bin/pstatus
 sudo ln -s ~/config/scripts/vim-workspace /usr/local/bin/vim-workspace
