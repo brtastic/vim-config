@@ -63,7 +63,7 @@ endfunction
 " GENERAL KEYBINDINGS
 function! s:setGenericKeyMaps()
 	noremap <c-c> <Esc>
-	noremap! <c-c> <Esc>
+	inoremap <c-c> <Esc>
 
 	noremap c "_c
 	noremap cc "_S
