@@ -30,7 +30,7 @@ function! s:setDisplayOptions()
 	set nolist
 	set scrolloff=2
 	set sidescrolloff=5
-	set nowrap
+	set wrap
 	set display+=lastline
 	set wildmenu
 	set ruler
@@ -102,18 +102,17 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
-	nnoremap <leader>r :call Enclose()<CR>
 	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
-	nnoremap <silent> <leader>c :call RunCommand(getline("."))<CR>
+	nnoremap <silent> <leader>> :call RunCommand(getline("."))<CR>
 	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
 	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
 	nnoremap <leader>sl :pwd<CR>
 	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
-	nnoremap <silent> <leader>p :call PhpDoc()<CR>
-	vnoremap <leader>vz "+y
-	noremap <leader>vv "+p
-	noremap <leader>vV "+P
+	nnoremap <silent> <leader>v :call PhpDoc()<CR>
+	vnoremap <leader>y "+y
+	noremap <leader>p "+p
+	noremap <leader>P "+P
 	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
 
 endfunction
@@ -155,9 +154,6 @@ function! s:setInsertModeMaps()
 		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "rw",<Esc>k$F"i
 		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; print Dumper();<Esc>hi
 		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>};<Esc>kO<Tab>
-
-		autocmd FileType html inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
-		autocmd FileType html.twig inoremap <buffer> &tag <c-g>u<Esc>byei<<Esc>ea></<c-o>p><Esc>F<i
 	augroup END
 
 	inoremap <c-p> <c-n>
@@ -181,7 +177,6 @@ endfunction
 
 " COMMANDS
 function! s:setCommands()
-	command! Rf call RemoveFunction()
 	command! Cs call CheckSyntax()
 	command! W w
 	command! Wq wq
@@ -233,15 +228,15 @@ function! s:setPluginOptions()
 	" FZF
 	nnoremap <leader>ff :call AvoidNerdTree(":Files")<CR>
 	nnoremap <leader>ft :call AvoidNerdTree(":Tags")<CR>
-	nnoremap <leader>y :call AvoidNerdTree(":BTags")<CR>
-	nnoremap <leader>fl :call AvoidNerdTree(":Lines")<CR>
-	nnoremap <leader>fb :call AvoidNerdTree(":Buffers")<CR>
+	nnoremap <leader>a :call AvoidNerdTree(":BTags")<CR>
+	nnoremap <leader>l :call AvoidNerdTree(":Lines")<CR>
+	nnoremap <leader>b :call AvoidNerdTree(":Buffers")<CR>
 	nnoremap <leader>fm :call AvoidNerdTree(":Marks")<CR>
 	nnoremap <leader>fc :call AvoidNerdTree(":Commits")<CR>
 	nnoremap <leader>fC :call AvoidNerdTree(":BCommits")<CR>
 	nnoremap <leader>fhf :call AvoidNerdTree(":History")<CR>
-	nnoremap <leader>fhc :call AvoidNerdTree(":History:")<CR>
-	nnoremap <leader>fhe :call AvoidNerdTree(":History/")<CR>
+	nnoremap <leader>c :call AvoidNerdTree(":History:")<CR>
+	nnoremap <leader>e :call AvoidNerdTree(":History/")<CR>
 
 	nmap <leader><tab> <plug>(fzf-maps-n)
 	imap <c-f> <plug>(fzf-complete-line)
@@ -260,10 +255,8 @@ function! s:setPluginOptions()
 	call esearch#map("<leader>fr", "esearch")
 
 	" SMART WORD
-	map <leader>w  <Plug>(smartword-w)
-	map <leader>b  <Plug>(smartword-b)
-	map <leader>e  <Plug>(smartword-e)
-	map <leader>ge  <Plug>(smartword-ge)
+	map <leader>.  <Plug>(smartword-w)
+	map <leader>;  <Plug>(smartword-b)
 
 	" SIMPLE WORKSPACE
 	let g:simplews_short_commands = 0
@@ -280,17 +273,6 @@ endfunction
 "--------------------
 "- HELPER FUNCTIONS -
 "--------------------
-
-function! Enclose()
-	exec "normal lbi" . nr2char(getchar())
-	exec "normal ea" . nr2char(getchar())
-	echom "Enclosed"
-endfunction
-
-function! RemoveFunction()
-	execute "normal \"zyi)da)bdw\"zP"
-	echom "Function removed"
-endfunction
 
 function! RunCommand(command)
 	rightbelow new
@@ -405,3 +387,4 @@ call s:setAutocommands()
 
 call s:setPluginOptions()
 call s:loadLocalOptions()
+

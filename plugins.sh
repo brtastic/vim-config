@@ -17,6 +17,7 @@ git clone git@github.com:vim-airline/vim-airline.git
 git clone git@github.com:sheerun/vim-polyglot.git
 git clone git@github.com:tpope/vim-commentary.git
 git clone git@github.com:tpope/vim-fugitive.git
+git clone git@github.com:tpope/vim-surround.git
 
 # Optional
 git clone git@github.com:eugen0329/vim-esearch.git
