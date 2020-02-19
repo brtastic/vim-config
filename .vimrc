@@ -31,6 +31,7 @@ function! s:setDisplayOptions()
 	set scrolloff=2
 	set sidescrolloff=5
 	set wrap
+	set nohlsearch
 	set display+=lastline
 	set wildmenu
 	set ruler
@@ -230,7 +231,7 @@ function! s:setPluginOptions()
 	nnoremap <leader>ft :call AvoidNerdTree(":Tags")<CR>
 	nnoremap <leader>a :call AvoidNerdTree(":BTags")<CR>
 	nnoremap <leader>l :call AvoidNerdTree(":Lines")<CR>
-	nnoremap <leader>b :call AvoidNerdTree(":Buffers")<CR>
+	nnoremap <Tab> :call AvoidNerdTree(":Buffers")<CR>
 	nnoremap <leader>fm :call AvoidNerdTree(":Marks")<CR>
 	nnoremap <leader>fc :call AvoidNerdTree(":Commits")<CR>
 	nnoremap <leader>fC :call AvoidNerdTree(":BCommits")<CR>
@@ -255,8 +256,8 @@ function! s:setPluginOptions()
 	call esearch#map("<leader>fr", "esearch")
 
 	" SMART WORD
-	map <leader>.  <Plug>(smartword-w)
-	map <leader>;  <Plug>(smartword-b)
+	map <leader>w  <Plug>(smartword-w)
+	map <leader>b  <Plug>(smartword-b)
 
 	" SIMPLE WORKSPACE
 	let g:simplews_short_commands = 0
@@ -357,7 +358,7 @@ function! SwapIdeMode()
 		windo set number
 		windo set relativenumber
 		windo set list
-		set showtabline=2
+		set showtabline=1
 		set laststatus=2
 		let g:gutentags_enabled = 1
 	endif
