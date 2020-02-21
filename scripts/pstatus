@@ -52,9 +52,10 @@ sub uptime_module {
 
 	my $days = int($upsec / 60 / 60 / 24);
 	my $hours = int($upsec / 60 / 60) % 24;
+	my $minutes = int($upsec / 60) % 60;
 	my $days_string = $days > 0 ? $days . "d " : "";
 
-	return "$uptime_symbol $days_string${hours}h";
+	return "$uptime_symbol $days_string${hours}h ${minutes}m";
 }
 
 sub battery_module {
