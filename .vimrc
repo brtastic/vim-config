@@ -28,15 +28,13 @@ function! s:setDisplayOptions()
 	syntax on
 	set listchars=tab:»\ ,space:·,trail:‼,nbsp:◦
 	set nolist
-	set scrolloff=2
 	set sidescrolloff=5
 	set wrap
 	set nohlsearch
-	set display+=lastline
 	set wildmenu
 	set ruler
 	au VimEnter * set laststatus=0
-	au VimEnter * set showtabline=1
+	au VimEnter * set showtabline=0
 endfunction
 
 " INDENTING AND EDITING
@@ -66,14 +64,6 @@ function! s:setGenericKeyMaps()
 	noremap <c-c> <Esc>
 	inoremap <c-c> <Esc>
 
-	noremap c "_c
-	noremap cc "_S
-	noremap C "_C
-	noremap s "_s
-	noremap S "_S
-	noremap x "_x
-	noremap X "_X
-
 	nnoremap ' `
 	nnoremap ` '
 	nnoremap Y y$
@@ -83,18 +73,15 @@ function! s:setGenericKeyMaps()
 	vnoremap K <nop>
 	nnoremap + o<Esc>
 	nnoremap - O<Esc>
-	noremap <silent> <c-u> @='15k'<CR>
-	noremap <silent> <c-d> @='15j'<CR>
-	noremap <silent> <c-b> @='30kzz'<CR>
-	noremap <silent> <c-f> @='30jzz'<CR>
-	noremap <c-e> 5<c-e>
-	noremap <c-y> 5<c-y>
+
+	nnoremap <c-e> 5k
+	nnoremap <c-y> 5j
 endfunction
 
 " LEADER KEY BINDINGS
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
-	nnoremap <silent> <leader>oo :NERDTree ~/.vim/org<CR>
+	nnoremap <leader>oo :e ~/.vim/org/
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <leader>j J
@@ -107,25 +94,22 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
 	nnoremap <silent> <leader>> :call RunCommand(getline("."))<CR>
 	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
-	nnoremap <leader>sn :cd ..<CR>:pwd<CR>
-	nnoremap <leader>sl :pwd<CR>
-	nnoremap <leader>ss :cd %:p:h<CR>:pwd<CR>
-	nnoremap <silent> <leader>v :call PhpDoc()<CR>
+	nnoremap <leader>du :cd ..<CR>:pwd<CR>
+	nnoremap <leader>dl :pwd<CR>
+	nnoremap <leader>dh :cd %:p:h<CR>:pwd<CR>
+	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
 	vnoremap <leader>y "+y
 	noremap <leader>p "+p
 	noremap <leader>P "+P
-	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
-
 endfunction
 
 " COMMAND MODE BINDINGS
 function! s:setCommandModeMaps()
 	cnoremap &pp <c-r><c-o>"
-	cnoremap &ft set filetype=
 
-	cnoremap &s2 set et ts=2 sw=2<CR>
-	cnoremap &s4 set et ts=4 sw=4<CR>
-	cnoremap &t3 set noet ts=3 sw=3<CR>
+	cnoremap &ss set ts=2 sw=2<CR>
+	cnoremap &sss set ts=3 sw=3<CR>
+	cnoremap &ssss set ts=4 sw=4<CR>
 endfunction
 
 " INSERT MODE BINDINGS
@@ -167,9 +151,7 @@ function! s:setSpecialKeyMaps()
 	nnoremap go i<CR><Esc>
 
 	noremap  <Up> <c-w>>
-	noremap! <Up> <Esc>
 	noremap  <Down> <c-w><
-	noremap! <Down> <Esc>
 endfunction
 
 "------------
