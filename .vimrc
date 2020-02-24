@@ -13,6 +13,7 @@ function! s:setEditorOptions()
 	set nrformats-=octal
 	set tags=.ctags;$HOME
 	filetype plugin on
+	filetype indent off
 	set sessionoptions-=options
 endfunction
 
@@ -63,6 +64,7 @@ endfunction
 function! s:setGenericKeyMaps()
 	noremap <c-c> <Esc>
 	inoremap <c-c> <Esc>
+	nnoremap <Space> <c-w><c-w>
 
 	nnoremap ' `
 	nnoremap ` '
@@ -71,11 +73,9 @@ function! s:setGenericKeyMaps()
 	vnoremap J <nop>
 	nnoremap <silent> K :bnext<CR>
 	vnoremap K <nop>
-	nnoremap + o<Esc>
-	nnoremap - O<Esc>
-
-	nnoremap <c-e> 5k
-	nnoremap <c-y> 5j
+	nnoremap <c-j> o<Esc>
+	nnoremap <c-k> O<Esc>
+	nnoremap go i<CR><Esc>
 endfunction
 
 " LEADER KEY BINDINGS
@@ -90,9 +90,8 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
-	nnoremap <leader>/ yiw:Ag <c-r><c-o>"<CR>
-	vnoremap <leader>/ y:Ag <c-r><c-o>"<CR>
-	nnoremap <silent> <leader>> :call RunCommand(getline("."))<CR>
+	nnoremap <leader>/ yiw:Ag <c-r>"<CR>
+	vnoremap <leader>/ y:Ag <c-r>"<CR>
 	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
 	nnoremap <leader>du :cd ..<CR>:pwd<CR>
 	nnoremap <leader>dl :pwd<CR>
@@ -105,8 +104,6 @@ endfunction
 
 " COMMAND MODE BINDINGS
 function! s:setCommandModeMaps()
-	cnoremap &pp <c-r><c-o>"
-
 	cnoremap &ss set ts=2 sw=2<CR>
 	cnoremap &sss set ts=3 sw=3<CR>
 	cnoremap &ssss set ts=4 sw=4<CR>
@@ -144,16 +141,7 @@ function! s:setInsertModeMaps()
 	inoremap <c-p> <c-n>
 	inoremap <c-y> <c-p>
 endfunction
-
-" SPECIAL KEY BINDINGS
-function! s:setSpecialKeyMaps()
-	nnoremap <Space> <c-w><c-w>
-	nnoremap go i<CR><Esc>
-
-	noremap  <Up> <c-w>>
-	noremap  <Down> <c-w><
-endfunction
-
+"
 "------------
 "- COMMANDS -
 "------------
@@ -222,14 +210,14 @@ function! s:setPluginOptions()
 	nnoremap <leader>e :call AvoidNerdTree(":History/")<CR>
 
 	nmap <leader><tab> <plug>(fzf-maps-n)
-	imap <c-f> <plug>(fzf-complete-line)
+	imap <c-x><c-l> <plug>(fzf-complete-line)
 
 	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
 	" ESEARCH
 	let g:esearch = {
 		\"adapter": "ag",
-		\"backend": "vim8",
+		\"backend": "nvim",
 		\"out": "win",
 		\"batch_size": 500,
 		\"use": ["visual"],
@@ -363,7 +351,6 @@ call s:setGenericKeyMaps()
 call s:setLeaderKeyMaps()
 call s:setCommandModeMaps()
 call s:setInsertModeMaps()
-call s:setSpecialKeyMaps()
 
 call s:setCommands()
 call s:setAutocommands()
