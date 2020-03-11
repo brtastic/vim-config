@@ -34,8 +34,8 @@ function! s:setDisplayOptions()
 	set nohlsearch
 	set wildmenu
 	set ruler
-	au VimEnter * set laststatus=0
-	au VimEnter * set showtabline=0
+	set laststatus=0
+	set showtabline=0
 endfunction
 
 " INDENTING AND EDITING
@@ -187,11 +187,6 @@ function! s:setPluginOptions()
 	let g:vdebug_options = {}
 	let g:vdebug_options["break_on_open"] = 0
 
-	" AIRLINE
-	let g:airline#extensions#tabline#enabled = 1
-	let g:airline_section_b = '%{strftime("%H:%M")}'
-	let g:airline_section_x = '%{gutentags#statusline()}'
-
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
 	let g:gutentags_enabled = 0
@@ -317,7 +312,6 @@ endfunction
 function! SwapIdeMode()
 	if exists("g:ide_mode") && g:ide_mode
 		let g:ide_mode = 0
-		windo set nonumber
 		windo set norelativenumber
 		windo set nolist
 		set showtabline=1
@@ -325,7 +319,6 @@ function! SwapIdeMode()
 		let g:gutentags_enabled = 0
 	else
 		let g:ide_mode = 1
-		windo set number
 		windo set relativenumber
 		windo set list
 		set showtabline=1

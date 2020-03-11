@@ -16,4 +16,4 @@
 
 "slock"
 	m:0x50 + c:33
-	Super_L + l
+	Super_L + s
