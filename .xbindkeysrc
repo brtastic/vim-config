@@ -15,5 +15,5 @@
 	XF86AudioRaiseVolume
 
 "slock"
-	m:0x50 + c:33
+	m:0x50 + c:47
 	Super_L + s
