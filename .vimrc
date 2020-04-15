@@ -15,6 +15,7 @@ function! s:setEditorOptions()
 	filetype plugin on
 	filetype indent off
 	set sessionoptions-=options
+	set mouse=a
 endfunction
 
 function! s:setColorSchemeOptions()
@@ -157,6 +158,7 @@ endfunction
 function! s:setAutocommands()
 	augroup vimrc_autocommands
 		autocmd!
+		autocmd BufRead * call LoadLocalFileOptions()
 		autocmd BufWritePre * call FixTrailingWhitespace()
 		autocmd BufWritePre * call FixTrailingNewline()
 
@@ -196,7 +198,7 @@ function! s:setPluginOptions()
 	nnoremap <leader>ft :call AvoidNerdTree(":Tags")<CR>
 	nnoremap <leader>a :call AvoidNerdTree(":BTags")<CR>
 	nnoremap <leader>l :call AvoidNerdTree(":Lines")<CR>
-	nnoremap <Tab> :call AvoidNerdTree(":Buffers")<CR>
+	nnoremap - :call AvoidNerdTree(":Buffers")<CR>
 	nnoremap <leader>fm :call AvoidNerdTree(":Marks")<CR>
 	nnoremap <leader>fc :call AvoidNerdTree(":Commits")<CR>
 	nnoremap <leader>fC :call AvoidNerdTree(":BCommits")<CR>
@@ -307,6 +309,17 @@ function! AutoRestoreWinView()
 		endif
 		unlet w:SavedBufView[buf]
 	endif
+endfunction
+
+function! LoadLocalFileOptions()
+	let thisdir = expand("<afile>:p:h")
+	while strlen(thisdir) > 1
+		let vi = thisdir . "/.vi"
+		if (filereadable(vi))
+			execute expand("<abuf>") . "bufdo source " . vi
+		endif
+		let thisdir = fnamemodify(thisdir, ":h")
+	endwhile
 endfunction
 
 function! SwapIdeMode()
