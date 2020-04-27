@@ -3,7 +3,7 @@
 source ~/config/local_config.sh
 
 xbindkeys
-setxkbmap -option caps:backspace,shift:both_capslock
+setxkbmap -layout pl,pl -variant dvp, -option caps:backspace,shift:both_capslock,grp:sclk_toggle
 # caps lock repat
 xset r 66
 

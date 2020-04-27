@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use autodie;
+use Getopt::Long;
+
+my %args = (
+	time => undef,
+	message => undef,
+);
+
+GetOptions(
+	"time=s" => \$args{time},
+	"message=s" => \$args{message},
+);
+
+while (my ($k, $v) = each %args) {
+	die "$k is required"
+		unless $v;
+}
+
+my $scheduler_file = $ENV{HOME} . "/.schedules";
+{
+	open my $fh, ">>", $scheduler_file;
+	print {$fh} "$args{time}-$args{message}\n";
+}

@@ -5,6 +5,7 @@ use warnings;
 use utf8;
 use autodie;
 use Getopt::Long;
+use Time::Piece;
 
 my %args = (
 	battery => $ENV{BATTERY_NAME},
@@ -37,6 +38,47 @@ sub calendar_module {
 	my $calendar_symbol = "";
 
 	return "$calendar_symbol $mday, $weekday";
+}
+
+sub scheduler_module {
+	my $alarm_symbol = "";
+	my $scheduler_file = $ENV{HOME} . "/.schedules";
+
+	my @scheduled;
+	# TODO: cache this, but watch for file changes
+	if (-f $scheduler_file) {
+		open my $schedules, "<", $scheduler_file;
+		while (my $schedule = <$schedules>) {
+			chomp $schedule;
+
+			if ($schedule =~ m{^([^@]*)@([^-]*)-(.*)}) {
+				push @scheduled, [$1, $2, $3];
+			}
+		}
+	}
+
+	my @found;
+	for my $schedule_data (@scheduled) {
+		my ($date, $time, $message) = @$schedule_data;
+		my ($day, $month, $year) = split /\./, $date;
+		my ($hour, $min) = split /:/, $time;
+
+		my $now = localtime;
+		my $offset = $now->tzoffset->seconds;
+		$month //= $now->mon;
+		$year //= $now->year;
+		my $d1 = Time::Piece->strptime("$day $month $year $hour $min", "%d %m %Y %H %M");
+		my $diff = $now - $d1 + $offset;
+
+		if ($diff->seconds > 0 && $diff->seconds < 120) {
+			push @found, $message;
+		}
+	}
+
+	if (@found) {
+		return "$alarm_symbol " . join " | $alarm_symbol ", @found;
+	}
+	return;
 }
 
 sub uptime_module {
@@ -135,7 +177,7 @@ while (1) {
 	my @modules;
 	for ($args{type}) {
 		if (!defined) {
-			@modules = \(&battery_module, &sound_module, &ram_module);
+			@modules = \(&scheduler_module, &battery_module, &sound_module, &ram_module);
 		} elsif (/time/) {
 			@modules = \(&time_module, &calendar_module, &uptime_module);
 		}

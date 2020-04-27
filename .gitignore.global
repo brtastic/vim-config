@@ -1,6 +1,6 @@
 /tags
 /.ctags
 *~
-/.gutctags
+/.gutctags*
 .ignore
 .vi

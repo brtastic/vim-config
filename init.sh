@@ -34,6 +34,7 @@ echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
 echo "export FZF_DEFAULT_COMMAND='ag -l \"\"'" >> ~/.bashrc
 
 sudo ln -s ~/config/scripts/pstatus /usr/local/bin/pstatus
+sudo ln -s ~/config/scripts/schedule /usr/local/bin/schedule
 sudo ln -s ~/config/scripts/vim-workspace /usr/local/bin/vim-workspace
 
 ~/config/plugins.sh
