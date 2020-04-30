@@ -74,8 +74,8 @@ function! s:setGenericKeyMaps()
 	vnoremap J <nop>
 	nnoremap <silent> K :bnext<CR>
 	vnoremap K <nop>
-	nnoremap <c-j> o<Esc>
-	nnoremap <c-k> O<Esc>
+	nnoremap <c-j> O<Esc>j
+	nnoremap <c-k> o<Esc>k
 	nnoremap go i<CR><Esc>
 endfunction
 

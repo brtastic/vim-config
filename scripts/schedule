@@ -3,25 +3,36 @@
 use strict;
 use warnings;
 use autodie;
-use Getopt::Long;
+use Time::Piece;
+use Time::Seconds;
 
-my %args = (
-	time => undef,
-	message => undef,
+die 'Usage: schedule <d-m-y@h:i> <"message">'
+	unless @ARGV == 2;
+
+my ($time, $message) = @ARGV;
+my ($day, $hour) = split /@/, $time;
+
+my %abbreviations = (
+	'today' => sub { Time::Seconds->new(0) },
+	'tomorrow' => sub { Time::Seconds->new(ONE_DAY) },
+	'+2' => sub { Time::Seconds->new(2 * ONE_DAY) },
+	'nextweek' => sub { Time::Seconds->new(ONE_WEEK) },
 );
 
-GetOptions(
-	"time=s" => \$args{time},
-	"message=s" => \$args{message},
-);
-
-while (my ($k, $v) = each %args) {
-	die "$k is required"
-		unless $v;
+if (exists $abbreviations{$day}) {
+	my $now = localtime;
+	my $plus = $abbreviations{$day}->();
+	my $wanted = $now + $plus;
+	$day = $wanted->strftime("%d-%m-%Y");
 }
+
+die "Invalid date format"
+	unless $day =~ m{\A(\d{1,2}(-\d{1,4}){0,2})?\z};
+die "Invalid time format"
+	unless $hour =~ m{\A\d{1,2}:\d{2}\z};
 
 my $scheduler_file = $ENV{HOME} . "/.schedules";
 {
 	open my $fh, ">>", $scheduler_file;
-	print {$fh} "$args{time}-$args{message}\n";
+	print {$fh} "$day\@$hour-$message\n";
 }
