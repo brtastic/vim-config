@@ -49,7 +49,7 @@ function! s:setEditingOptions()
 endfunction
 
 " SEARCHING
-function! s:setSerachingOptions()
+function! s:setSearchingOptions()
 	set rtp+=~/.fzf
 	set ignorecase
 	set smartcase
@@ -165,6 +165,9 @@ function! s:setAutocommands()
 		" save cursor position
 		autocmd BufLeave * call AutoSaveWinView()
 		autocmd BufEnter * call AutoRestoreWinView()
+
+		autocmd FileType perl nnoremap <buffer> <leader>s :set filetype=pod<CR>
+		autocmd FileType pod nnoremap <buffer> <leader>s :set filetype=perl<CR>
 	augroup END
 endfunction
 
@@ -351,7 +354,7 @@ call s:setEditorOptions()
 call s:setColorSchemeOptions()
 call s:setDisplayOptions()
 call s:setEditingOptions()
-call s:setSerachingOptions()
+call s:setSearchingOptions()
 
 call s:setGenericKeyMaps()
 call s:setLeaderKeyMaps()

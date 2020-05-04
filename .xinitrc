@@ -8,7 +8,7 @@ setxkbmap -layout pl,pl -variant dvp, -option caps:backspace,shift:both_capslock
 xset r 66
 
 feh --bg-scale /usr/share/wallpapers/wallpaper.jpg
-xcompmgr &
+compton --backend glx --blur-background --blur-method kawase -b
 
 pkill -u $USER -f ^perl.*pstatus
 pstatus &
