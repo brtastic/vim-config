@@ -315,14 +315,16 @@ function! AutoRestoreWinView()
 endfunction
 
 function! LoadLocalFileOptions()
-	let thisdir = expand("<afile>:p:h")
-	while strlen(thisdir) > 1
-		let vi = thisdir . "/.vi"
-		if (filereadable(vi))
-			execute expand("<abuf>") . "bufdo source " . vi
-		endif
-		let thisdir = fnamemodify(thisdir, ":h")
-	endwhile
+	if strlen(&buftype) == 0
+		let thisdir = expand("<afile>:p:h")
+		while strlen(thisdir) > 1
+			let vi = thisdir . "/.vi"
+			if (filereadable(vi))
+				execute expand("<abuf>") . "bufdo source " . vi
+			endif
+			let thisdir = fnamemodify(thisdir, ":h")
+		endwhile
+	endif
 endfunction
 
 function! SwapIdeMode()
