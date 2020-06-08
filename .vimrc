@@ -66,6 +66,7 @@ function! s:setGenericKeyMaps()
 	noremap <c-c> <Esc>
 	inoremap <c-c> <Esc>
 	nnoremap <Space> <c-w><c-w>
+	tnoremap <Space><Space> <c-\><c-n>
 
 	nnoremap ' `
 	nnoremap ` '
@@ -134,7 +135,7 @@ function! s:setInsertModeMaps()
 
 		autocmd FileType perl inoremap <buffer> &se <c-g>u$self->
 		autocmd FileType perl inoremap <buffer> &my <c-g>umy () = @_;<Esc>F)i
-		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "rw",<Esc>k$F"i
+		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "ro",<Esc>k$F"i
 		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; print Dumper();<Esc>hi
 		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>};<Esc>kO<Tab>
 	augroup END
