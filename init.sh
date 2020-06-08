@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # Set up environment
 
-sudo zypper update
-sudo zypper install gmp-devel patch xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh tree ctags htop the_silver_searcher xbindkeys vivaldi-stable MozillaThunderbird telegram-desktop file-roller stalonetray gimp ranger screenshot-tool nomacs
+doas pkg install git xorg dbus ncurses tmux freetype fontconfig patch tree ctags htop neofetch xbindkeys stalonetray the_silver_searcher py37-ranger firefox
+# sudo zypper install gmp-devel patch xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh tree ctags htop the_silver_searcher xbindkeys vivaldi-stable MozillaThunderbird telegram-desktop file-roller stalonetray gimp ranger screenshot-tool nomacs
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
@@ -29,12 +29,10 @@ git config --global core.excludesfile ~/.gitignore
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
-\curl -L https://install.perlbrew.pl | bash
-echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
-echo "export FZF_DEFAULT_COMMAND='ag -l \"\"'" >> ~/.bashrc
+curl -L https://install.perlbrew.pl | bash
 
-sudo ln -s ~/config/scripts/pstatus /usr/local/bin/pstatus
-sudo ln -s ~/config/scripts/schedule /usr/local/bin/schedule
-sudo ln -s ~/config/scripts/vim-workspace /usr/local/bin/vim-workspace
+doas ln -s ~/config/scripts/pstatus /usr/local/bin/pstatus
+doas ln -s ~/config/scripts/schedule /usr/local/bin/schedule
+doas ln -s ~/config/scripts/vim-workspace /usr/local/bin/vim-workspace
 
 ~/config/plugins.sh

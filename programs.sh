@@ -1,2 +1,2 @@
 mkdir ~/prg
-git clone git@github.com:tryone144/compton.git ~/prg/compton
+git clone https://github.com/tryone144/compton.git ~/prg/compton
