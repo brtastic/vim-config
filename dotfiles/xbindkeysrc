@@ -1,16 +1,16 @@
-"xbacklight -dec 8"
+"intel_backlight decr"
 	m:0x0 + c:232
 	XF86MonBrightnessDown
 
-"xbacklight -inc 8"
+"intel_backlight incr"
 	m:0x0 + c:233
 	XF86MonBrightnessUp
 
-"amixer -M sset Master 5%- && pstatus --update"
+"mixer vol -5"
 	m:0x0 + c:122
 	XF86AudioLowerVolume
 
-"amixer -M sset Master 5%+ && pstatus --update"
+"mixer vol +5"
 	m:0x0 + c:123
 	XF86AudioRaiseVolume
 

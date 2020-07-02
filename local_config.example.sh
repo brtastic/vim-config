@@ -1,4 +1,5 @@
-#!/usr/bin/bash
+#!/usr/bin/env sh
 
-export BATTERY_NAME=BAT1
-export SOUND_DEVICE=Master
+# xhost + local:
+# export DISPLAY=localhost:0
+# export MON_CONFIG=HDMI1;eDP1;right
