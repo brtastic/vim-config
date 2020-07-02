@@ -1,0 +1,8 @@
+intel_backlight 15 - change brightness
+doas acpiconf -s 3 - suspend
+mixer vol +5 - volume
+apm - battery
+
+hw.acpi.battery.life
+hw.acpi.acline
+mixer
