@@ -33,8 +33,10 @@ my $enabled = 1;
 if (defined $pointer_master && defined $touchpad_slave) {
 	if ($enabled) {
 		`$command float $touchpad_slave`;
+    `$command disable $touchpad_slave`;
 	} else {
 		`$command reattach $touchpad_slave $pointer_master`;
+    `$command enable $touchpad_slave`;
 	}
 } else {
 	die "couldn't fetch full data from $command";

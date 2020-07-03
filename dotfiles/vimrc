@@ -114,15 +114,15 @@ endfunction
 " INSERT MODE BINDINGS
 function! s:setInsertModeMaps()
 	inoremap &<Tab> &
-	inoremap &{ <c-g>u{<CR>}<Esc>O<Tab>
-	inoremap &;{ <c-g>u{<CR>};<Esc>O<Tab>
-	inoremap &,{ <c-g>u{<CR>},<Esc>O<Tab>
-	inoremap &[ <c-g>u[<CR>]<Esc>O<Tab>
-	inoremap &;[ <c-g>u[<CR>];<Esc>O<Tab>
-	inoremap &,[ <c-g>u[<CR>],<Esc>O<Tab>
-	inoremap &( <c-g>u(<CR>)<Esc>O<Tab>
-	inoremap &;( <c-g>u(<CR>);<Esc>O<Tab>
-	inoremap &,( <c-g>u(<CR>),<Esc>O<Tab>
+	inoremap &{ <c-g>u{<CR>}<Esc>k$
+	inoremap &;{ <c-g>u{<CR>};<Esc>k$
+	inoremap &,{ <c-g>u{<CR>},<Esc>k$
+	inoremap &[ <c-g>u[<CR>]<Esc>k$
+	inoremap &;[ <c-g>u[<CR>];<Esc>k$
+	inoremap &,[ <c-g>u[<CR>],<Esc>k$
+	inoremap &( <c-g>u(<CR>)<Esc>k$
+	inoremap &;( <c-g>u(<CR>);<Esc>k$
+	inoremap &,( <c-g>u(<CR>),<Esc>k$
 
 	augroup vimrc_snippets
 		autocmd!
