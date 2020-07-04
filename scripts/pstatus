@@ -8,8 +8,6 @@ use Getopt::Long;
 use Time::Piece;
 
 my %args = (
-	battery => $ENV{BATTERY_NAME},
-	sound_device => $ENV{SOUND_DEVICE},
 	type => undef,
 	update => 0,
 	timeout => 15,
@@ -17,8 +15,6 @@ my %args = (
 );
 
 GetOptions(
-	"battery=s" => \$args{battery},
-	"sound_device=s" => \$args{sound_device},
 	"update" => \$args{update},
 	"type=s" => \$args{type},
 	"timeout=i" => \$args{timeout},
@@ -84,15 +80,14 @@ sub scheduler_module_generator {
 }
 
 sub uptime_module {
-	my $uptime = "/proc/uptime";
+	my $command = "sysctl -n";
 	my $uptime_symbol = "";
-	my $upsec = do {
-		open my $fh, "<", $uptime;
-		my $line = readline $fh;
-		chomp $line;
-		my ($up, $idle) = split /\s/, $line;
-		$up;
-	};
+	my $boottime = `$command kern.boottime`;
+
+	if ($boottime =~ /sec \s = \s (\d+)/x) {
+		$boottime = $1;
+	}
+	my $upsec = time - $boottime;
 
 	my $days = int($upsec / 60 / 60 / 24);
 	my $hours = int($upsec / 60 / 60) % 24;
@@ -103,18 +98,18 @@ sub uptime_module {
 }
 
 sub battery_module {
-	return unless $args{battery};
-	my $battery = "/sys/class/power_supply/$args{battery}";
+	my $command = "sysctl -n";
+	my $battery = "hw.acpi.battery.life";
+	my $acline = "hw.acpi.acline";
 	my @battery_levels = ("", "", "", "");
 	my $battery_charging = "";
 
-	if (-d $battery) {
 		my $percent = do {
-			open my $capacity, "<", "$battery/capacity";
+			open my $capacity, "-|", "$command $battery";
 			readline $capacity;
 		};
 		my $charging = do {
-			open my $status, "<", "$battery/status";
+			open my $status, "-|", "$command $acline";
 			readline $status;
 		};
 
@@ -122,56 +117,40 @@ sub battery_module {
 		chomp $charging;
 
 		my $level = $battery_charging;
-		if ($charging =~ /discharging/i) {
+		if (!$charging) {
 			my $result = int(log($percent) / log(2));
 			$level = $battery_levels[$result > 3 ? $result - 3 : 0];
 		}
 
 		return "$level $percent";
-	}
 	return "$battery_levels[0] ?";
 }
 
 sub sound_module {
-	return unless $args{sound_device};
-	my $soundcmd = "amixer -M sget $args{sound_device}";
+	my $soundcmd = "mixer -S vol";
 	my @sound_levels = ("", "", "");
 	my $ret = `$soundcmd`;
-	if ($? == 0 && $ret =~ /playback channels: (.*?)$/im) {
-		my @sources = map { s#^\s*|\s*$##gr } split /-/, $1;
-		if ($ret =~ /$sources[0]: playback (?:.*?) \[(\d+)%\](?:.*?) \[on\]$/im) {
-			my $percent = $1;
-			my $level = $sound_levels[int(($percent - 1) / 100 * @sound_levels)];
-			return "$level $percent";
-		}
+	if ($? == 0 && $ret =~ /vol:(\d+)/im) {
+		my $percent = $1;
+		my $level = $sound_levels[int(($percent - 1) / 100 * @sound_levels)];
+		return "$level $percent";
 	}
 	return "$sound_levels[0] ?";
 }
 
 sub ram_module {
-	my $meminfo = "/proc/meminfo";
+	my $command = "sysctl -n";
 	my $ram_indicator = "";
 
-	if (-f $meminfo) {
-		my $data = do {
-			open my $fh, "<", $meminfo;
-			my %data;
+	my $active = `$command vm.stats.vm.v_active_count`;
+	my $wired = `$command vm.stats.vm.v_wire_count`;
+	my $total = `$command vm.stats.vm.v_page_count`;
 
-			while (my $line = <$fh>) {
-				chomp $line;
-				if ($line =~ /(MemTotal|MemFree|Buffers|Cached):\s+(\d+) kB/) {
-					$data{$1} = $2;
-					last if scalar keys(%data) == 4;
-				}
-			}
-			\%data;
-		};
-		if (scalar keys(%$data) == 4) {
-			my $level = int(1000 * ($data->{MemTotal} - $data->{MemFree} - $data->{Buffers} - $data->{Cached}) / $data->{MemTotal}) / 10;
-			return "$ram_indicator $level";
-		}
-
+	if ($active && $wired && $total) {
+		my $level = int(1000 * ($active + $wired) / $total) / 10;
+		return "$ram_indicator $level";
 	}
+
 	return "$ram_indicator ?";
 }
 
