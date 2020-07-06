@@ -2,7 +2,7 @@
 
 # Set up environment
 
-doas pkg install git xorg ncurses tmux pkgconf freetype2 fontconfig patch tree ctags htop neofetch xbindkeys stalonetray the_silver_searcher py37-ranger firefox xf86-video-intel slock dmenu intel-backlight networkmgr freefont-ttf libsynaptics xdm pavucontrol xclip thunderbird gimp-app feh file-roller gmp scrot bash xcompmgr
+doas pkg install git xorg ncurses tmux pkgconf freetype2 fontconfig patch tree ctags htop neofetch xbindkeys stalonetray the_silver_searcher py37-ranger firefox xf86-video-intel slock dmenu intel-backlight networkmgr freefont-ttf libsynaptics slim pavucontrol xclip thunderbird gimp-app feh file-roller gmp scrot bash xcompmgr
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
