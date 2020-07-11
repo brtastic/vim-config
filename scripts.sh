@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+mkdir ~/bin
 ln -s ~/config/scripts/pstatus ~/bin/pstatus
 ln -s ~/config/scripts/sched ~/bin/sched
 ln -s ~/config/scripts/mon ~/bin/mon
