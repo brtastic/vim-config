@@ -4,4 +4,4 @@ mixer - volume
 apm - battery
 
 - slim as xdm - use /usr/local/bin/bash, change evdev keyboard, set up .bash_profile to add ~/bin to $PATH
-
+- add user to video group
