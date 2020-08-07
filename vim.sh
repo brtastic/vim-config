@@ -17,7 +17,6 @@ git clone https://github.com/morhetz/gruvbox.git
 
 # Nice to have
 git clone https://github.com/ludovicchabant/vim-gutentags.git
-git clone https://github.com/universal-ctags/ctags.git
 git clone https://github.com/tpope/vim-commentary.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/tpope/vim-surround.git

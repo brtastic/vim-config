@@ -104,26 +104,25 @@ sub battery_module {
 	my @battery_levels = ("", "", "", "");
 	my $battery_charging = "";
 
-		my $percent = do {
-			open my $capacity, "-|", "$command $battery";
-			readline $capacity;
-		};
-		my $charging = do {
-			open my $status, "-|", "$command $acline";
-			readline $status;
-		};
+	my $percent = do {
+		open my $capacity, "-|", "$command $battery";
+		readline $capacity;
+	};
+	my $charging = do {
+		open my $status, "-|", "$command $acline";
+		readline $status;
+	};
 
-		chomp $percent;
-		chomp $charging;
+	chomp $percent;
+	chomp $charging;
 
-		my $level = $battery_charging;
-		if (!$charging) {
-			my $result = int(log($percent) / log(2));
-			$level = $battery_levels[$result > 3 ? $result - 3 : 0];
-		}
+	my $level = $battery_charging;
+	if (!$charging) {
+		my $result = int(log($percent || 0) / log(2));
+		$level = $battery_levels[$result > 3 ? $result - 3 : 0];
+	}
 
-		return "$level $percent";
-	return "$battery_levels[0] ?";
+	return "$level $percent";
 }
 
 sub sound_module {
