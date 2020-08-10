@@ -2,7 +2,7 @@
 
 # Set up environment
 
-doas pkg install git xorg ncurses tmux pkgconf freetype2 fontconfig patch tree universal-ctags htop neofetch xbindkeys stalonetray the_silver_searcher py37-ranger firefox xf86-video-intel slock dmenu intel-backlight networkmgr freefont-ttf libsynaptics slim pavucontrol xclip thunderbird gimp-app feh file-roller gmp scrot bash xcompmgr neovim fusefs-ntfs drm-kmod twemoji-color-font-ttf
+doas pkg install git xorg ncurses tmux pkgconf freetype2 fontconfig patch tree universal-ctags htop neofetch xbindkeys stalonetray the_silver_searcher py37-ranger firefox xf86-video-intel slock dmenu intel-backlight networkmgr freefont-ttf libsynaptics slim pavucontrol xclip thunderbird gimp-app feh file-roller gmp scrot bash xcompmgr neovim fusefs-ntfs drm-kmod twemoji-color-font-ttf ja-font-std zh-font-std
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
@@ -23,6 +23,7 @@ ln -s ~/config/dotfiles/Xresources ~/.Xresources
 ln -s ~/config/dotfiles/xinitrc ~/.xinitrc
 ln -s ~/config/dotfiles/xbindkeysrc ~/.xbindkeysrc
 ln -s ~/config/dotfiles/gitignore ~/.gitignore
+ln -s ~/config/dotfiles/perltidyrc ~/.perltidyrc
 
 git config --global core.excludesfile ~/.gitignore
 git config --global user.name brtastic
