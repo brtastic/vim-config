@@ -25,3 +25,7 @@
 "slock"
 	m:0x50 + c:47
 	Super_L + s
+
+"kbtgl"
+    m:0x0 + c:78
+    Scroll_Lock
