@@ -3,7 +3,7 @@
 # Set up environment
 
 sudo zypper update
-sudo zypper install gmp-devel patch xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh tree ctags htop the_silver_searcher xbindkeys MozillaThunderbird file-roller stalonetray gimp ranger nomacs xbacklight make xcompmgr xinput screenshot-tool
+sudo zypper install gmp-devel patch xf86-video-intel freetype fontconfig gcc gvim xorg-x11-devel ncurses-devel tmux feh tree ctags htop the_silver_searcher xbindkeys MozillaThunderbird file-roller stalonetray gimp ranger nomacs xbacklight make xcompmgr xinput screenshot-tool pavucontrol pulseaudio #openvpn
 
 mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
