@@ -92,8 +92,6 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
-	nnoremap <leader>/ yiw:Ag <c-r>"<CR>
-	vnoremap <leader>/ y:Ag <c-r>"<CR>
 	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
 	nnoremap <leader>du :cd ..<CR>:pwd<CR>
 	nnoremap <leader>dl :pwd<CR>
@@ -114,18 +112,19 @@ endfunction
 " INSERT MODE BINDINGS
 function! s:setInsertModeMaps()
 	inoremap &<Tab> &
-	inoremap &{ <c-g>u{<CR>}<Esc>k$
-	inoremap &;{ <c-g>u{<CR>};<Esc>k$
-	inoremap &,{ <c-g>u{<CR>},<Esc>k$
-	inoremap &[ <c-g>u[<CR>]<Esc>k$
-	inoremap &;[ <c-g>u[<CR>];<Esc>k$
-	inoremap &,[ <c-g>u[<CR>],<Esc>k$
-	inoremap &( <c-g>u(<CR>)<Esc>k$
-	inoremap &;( <c-g>u(<CR>);<Esc>k$
-	inoremap &,( <c-g>u(<CR>),<Esc>k$
+	inoremap &{ <c-g>u{<CR>}<Esc>
+	inoremap &;{ <c-g>u{<CR>};<Esc>
+	inoremap &,{ <c-g>u{<CR>},<Esc>
+	inoremap &[ <c-g>u[<CR>]<Esc>
+	inoremap &;[ <c-g>u[<CR>];<Esc>
+	inoremap &,[ <c-g>u[<CR>],<Esc>
+	inoremap &( <c-g>u(<CR>)<Esc>
+	inoremap &;( <c-g>u(<CR>);<Esc>
+	inoremap &,( <c-g>u(<CR>),<Esc>
 
 	augroup vimrc_snippets
 		autocmd!
+		autocmd FileType php inoremap <buffer> &file <c-g><?php<CR><CR>class <CR>{<CR>}<CR><Esc>3kA
 		autocmd FileType php inoremap <buffer> &th <c-g>u$this->
 		autocmd FileType php inoremap <buffer> &prf <c-g>u<Esc>biprotected function <Esc>A()<CR>{<CR>}<Esc>kk$F)i
 		autocmd FileType php inoremap <buffer> &pf <c-g>u<Esc>bipublic function <Esc>A()<CR>{<CR>}<Esc>kk$F)i
@@ -136,12 +135,9 @@ function! s:setInsertModeMaps()
 		autocmd FileType perl inoremap <buffer> &se <c-g>u$self->
 		autocmd FileType perl inoremap <buffer> &my <c-g>umy () = @_;<Esc>F)i
 		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "ro",<Esc>k$F"i
-		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; print Dumper();<Esc>hi
-		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>};<Esc>kO<Tab>
+		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; die Dumper();<Esc>hi
+		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>}<Esc>kO<Tab>
 	augroup END
-
-	inoremap <c-p> <c-n>
-	inoremap <c-y> <c-p>
 endfunction
 "
 "------------
@@ -150,7 +146,6 @@ endfunction
 
 " COMMANDS
 function! s:setCommands()
-	command! Cs call CheckSyntax()
 	command! W w
 	command! Wq wq
 endfunction
@@ -161,7 +156,6 @@ function! s:setAutocommands()
 		autocmd!
 		autocmd BufRead * call LoadLocalFileOptions()
 		autocmd BufWritePre * call FixTrailingWhitespace()
-		autocmd BufWritePre * call FixTrailingNewline()
 
 		" save cursor position
 		autocmd BufLeave * call AutoSaveWinView()
@@ -255,38 +249,10 @@ function! RunCommand(command)
 	map <silent> <buffer> <CR> :q<CR>
 endfunction
 
-function! CheckSyntax()
-	let path = expand("%:p")
-	let commands = {
-		\"php": "php -l",
-		\"perl": "perl -c",
-	\}
-	let command = get(commands, &filetype, "")
-	if !strlen(command)
-		echom "Unknown filetype"
-		return
-	endif
-	call RunCommand(command . " " . path)
-endfunction
-
 function! FixTrailingWhitespace()
 	let view = winsaveview()
 	%s/\s\+$//ge
 	call winrestview(view)
-endfunction
-
-function! FixTrailingNewline()
-	let lastline = line("$")
-	let curline = lastline
-	while curline > 0 && foldlevel(curline) == 0 && getline(curline) =~ '^\s*$'
-		let curline -= 1
-	endwhile
-	let curline += 2
-	if curline <= lastline
-		let view = winsaveview()
-		execute curline . "," . lastline . "delete _"
-		call winrestview(view)
-	endif
 endfunction
 
 function! AvoidNerdTree(comm)
