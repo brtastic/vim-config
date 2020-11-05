@@ -3,12 +3,12 @@
 source ~/config/local_config.sh
 
 xbindkeys
-setxkbmap -layout pl,pl -variant dvp, -option caps:backspace,shift:both_capslock,grp:sclk_toggle
+echo dvorak > ~/.kblayout
+kbtgl
 # caps lock repat
 xset r 66
 
 feh --bg-scale /usr/share/wallpapers/wallpaper.jpg
-# compton --backend glx --blur-background --blur-method kawase -b
 xcompmgr &
 
 pkill -u $USER -f ^perl.*pstatus
