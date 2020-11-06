@@ -25,3 +25,7 @@
 "kbtgl"
     m:0x0 + c:78
     Scroll_Lock
+
+"screenshot-tool"
+    m:0x0 + c:107
+    Print
