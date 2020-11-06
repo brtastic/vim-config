@@ -156,6 +156,7 @@ function! s:setAutocommands()
 		autocmd!
 		autocmd BufRead * call LoadLocalFileOptions()
 		autocmd BufWritePre * call FixTrailingWhitespace()
+		autocmd FileType nerdtree unmap <buffer> ?
 
 		" save cursor position
 		autocmd BufLeave * call AutoSaveWinView()
