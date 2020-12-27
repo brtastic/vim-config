@@ -41,7 +41,7 @@ endfunction
 
 " INDENTING AND EDITING
 function! s:setEditingOptions()
-	set ts=3 sw=3 noet
+	set ts=4 sw=4 noet
 	set autoindent
 	set smarttab
 	set backspace=indent,eol,start
@@ -134,7 +134,7 @@ function! s:setInsertModeMaps()
 
 		autocmd FileType perl inoremap <buffer> &se <c-g>u$self->
 		autocmd FileType perl inoremap <buffer> &my <c-g>umy () = @_;<Esc>F)i
-		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas "" => (<CR>);<Esc>O<Tab>is => "ro",<Esc>k$F"i
+		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas '' => (<CR>);<Esc>O<Tab>is => 'ro',<Esc>k$F'i
 		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; die Dumper();<Esc>hi
 		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>}<Esc>kO<Tab>
 	augroup END
@@ -162,8 +162,14 @@ function! s:setAutocommands()
 		autocmd BufLeave * call AutoSaveWinView()
 		autocmd BufEnter * call AutoRestoreWinView()
 
+		" case sensitive completion
+		au InsertEnter * set noignorecase
+		au InsertLeave * set ignorecase
+
 		autocmd FileType perl nnoremap <buffer> <leader>s :set filetype=pod<CR>
 		autocmd FileType pod nnoremap <buffer> <leader>s :set filetype=perl<CR>
+		autocmd FileType sql imapclear <buffer>
+		autocmd FileType vorg nunmap <buffer> -
 	augroup END
 endfunction
 
@@ -211,15 +217,7 @@ function! s:setPluginOptions()
 	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
 	" ESEARCH
-	let g:esearch = {
-		\"adapter": "ag",
-		\"backend": "nvim",
-		\"out": "win",
-		\"batch_size": 500,
-		\"use": ["visual"],
-		\"default_mappings": 1,
-	\}
-	call esearch#map("<leader>fr", "esearch")
+	map <leader>fr <Plug>(esearch)
 
 	" SMART WORD
 	map <leader>w  <Plug>(smartword-w)

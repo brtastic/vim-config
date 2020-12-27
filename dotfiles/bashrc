@@ -4,5 +4,5 @@ export VISUAL=vi
 export FZF_DEFAULT_COMMAND='ag -U -l ""'
 export SSH_ASKPASS=
 
-# source ~/perl5/perlbrew/etc/bashrc
+source ~/perl5/perlbrew/etc/bashrc
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
