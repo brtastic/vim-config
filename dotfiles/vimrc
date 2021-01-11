@@ -233,6 +233,9 @@ function! s:setPluginOptions()
 	" JSONVIEWER
 	command! Jv call jsonviewer#init()
 
+	" EDITORCONFIG
+	let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
 endfunction
 
 "--------------------
@@ -286,7 +289,12 @@ function! LoadLocalFileOptions()
 		while strlen(thisdir) > 1
 			let vi = thisdir . "/.vi"
 			if (filereadable(vi))
-				execute expand("<abuf>") . "bufdo source " . vi
+				let contents = readfile(vi, '', 1)[0]
+				let width = strcharpart(contents, 0, 1)
+				let rest = strcharpart(contents, 1)
+				let type = rest ==# "et" ? "et" : "noet"
+				execute "setlocal sw=" . width . " ts=" . width . " " . type
+				break
 			endif
 			let thisdir = fnamemodify(thisdir, ":h")
 		endwhile
