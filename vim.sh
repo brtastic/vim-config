@@ -20,9 +20,10 @@ git clone https://github.com/ludovicchabant/vim-gutentags.git
 git clone https://github.com/tpope/vim-commentary.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/tpope/vim-surround.git
+git clone https://github.com/editorconfig/editorconfig-vim
+git clone https://github.com/eugen0329/vim-esearch.git
 
 # Optional
-git clone https://github.com/eugen0329/vim-esearch.git
 git clone https://github.com/kana/vim-smartword.git
 git clone https://github.com/brtastic/vim-simple-workspace.git
 git clone https://github.com/brtastic/vorg.git
