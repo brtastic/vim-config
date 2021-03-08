@@ -10,6 +10,10 @@ xset r 66
 
 # disable screen blacking
 xset s off -dpms
+
+# mouse acceleration
+xinput --set-prop 9 'libinput Accel Speed' 0.2
+
 intel_backlight 35
 
 feh --bg-scale $WALLPAPER
