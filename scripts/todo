@@ -15,8 +15,8 @@ my $user = shift @ARGV // 'brtastic';
 my $rt = 'https://rt.brtastic.xyz';
 my $password_file = path($ENV{HOME} . "/.config/todo/$user");
 
-my $subject = prompt 'Subject:';
-my $content = prompt 'Content:' || $subject;
+my $subject = prompt 'Subject:', -v;
+my $content = prompt 'Content:', -v || $subject;
 
 # NOTE: there's no encryption on the password file. It is only base64-encoded
 # to avoid disclosing the password by accident
@@ -25,7 +25,7 @@ if (-f $password_file) {
 	$password = decode_base64($password_file->slurp);
 }
 else {
-	$password = prompt 'RT password:', -echo => '*';
+	$password = prompt 'RT password:', -echo => '*', -v;
 	$password_file->dirname->make_path;
 	$password_file->spurt(encode_base64($password));
 	$password_file->chmod(0600);

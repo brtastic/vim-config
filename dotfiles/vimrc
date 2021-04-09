@@ -171,6 +171,7 @@ function! s:setAutocommands()
 		autocmd FileType pod nnoremap <buffer> <leader>s :set filetype=perl<CR>
 		autocmd FileType sql imapclear <buffer>
 		autocmd FileType vorg nunmap <buffer> -
+		autocmd FileType * set synmaxcol=5000
 	augroup END
 endfunction
 
@@ -237,6 +238,12 @@ function! s:setPluginOptions()
 
 	" EDITORCONFIG
 	let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+	" TAGBAR
+	noremap <leader>y :TagbarToggle<CR>
+	let g:tagbar_map_showproto = "r"
+	let g:tagbar_map_togglefold = "za"
+	let g:tagbar_map_jump = ["<CR>", "o"]
 
 endfunction
 
