@@ -24,6 +24,7 @@ git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/tpope/vim-surround.git
 git clone https://github.com/editorconfig/editorconfig-vim
 git clone https://github.com/eugen0329/vim-esearch.git
+git clone https://github.com/majutsushi/tagbar.git
 
 # Optional
 git clone https://github.com/kana/vim-smartword.git
