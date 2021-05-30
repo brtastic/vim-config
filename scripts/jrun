@@ -1,0 +1,6 @@
+#!/bin/sh
+
+project=$1
+shift 1
+version=5.32.0
+doas jexec -U brtastic -l brtastic /bin/sh -c "PATH=/root/perl5/perlbrew/perls/perl-$version/bin:/root/perl5/perlbrew/bin:\$PATH; cd /home/brtastic/$project && $*"
