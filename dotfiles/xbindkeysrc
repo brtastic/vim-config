@@ -1,12 +1,4 @@
 "intel_backlight decr"
-	m:0x0 + c:173
-	XF86AudioPrev
-
-"intel_backlight incr"
-	m:0x0 + c:171
-	XF86AudioNext
-
-"intel_backlight decr"
 	m:0x0 + c:232
 	XF86MonBrightnessDown
 
