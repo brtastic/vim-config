@@ -25,3 +25,7 @@
 "kbtgl"
     m:0x0 + c:127
     Pause
+
+"gnome-screenshot -i"
+	m:0x0 + c:107
+	Print
