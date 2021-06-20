@@ -1,0 +1,8 @@
+#!/bin/sh
+
+project=$1
+shift 1
+doas jexec -l brtastic /bin/sh -c "PATH=\`sh /home/brtastic/setenv\` && cd /home/brtastic/$project && $*"
+
+# put into /home/brtastic/setenv in jail:
+# echo "/root/perl5/perlbrew/perls/perl-$version/bin:/root/perl5/perlbrew/bin:$PATH;"
