@@ -1,0 +1,1 @@
+usbconfig -u 0 -a 2 power_save
