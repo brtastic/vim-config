@@ -1,3 +1,2 @@
-kldload cuse
-webcamd -d ugen0.2
+doas webcamd -d ugen0.2
 
