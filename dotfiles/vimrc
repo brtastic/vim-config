@@ -238,7 +238,7 @@ function! s:setPluginOptions()
 	let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 	" TAGBAR
-	noremap <leader>y :TagbarToggle<CR>
+	nnoremap <leader>y :TagbarToggle<CR>
 	let g:tagbar_map_showproto = "r"
 	let g:tagbar_map_togglefold = "za"
 	let g:tagbar_map_jump = ["<CR>", "o"]

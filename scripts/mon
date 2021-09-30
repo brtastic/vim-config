@@ -9,14 +9,14 @@ die "please configure MON_CONFIG envvar"
 my @config = split /;/, $ENV{MON_CONFIG};
 my $output = $config[0];
 my $base_output = $config[1];
-my $position = $config[2];
 
 my @cleanup = (
 	$ENV{HOME} . '/.fehbg',
 );
 
-my $arg = shift;
-$arg //= "I";
+my $arg = shift // "I";
+
+my $position = shift // $config[2];
 
 if ($arg eq "I") {
 	print `xrandr --output $output --auto --$position-of $base_output`;
