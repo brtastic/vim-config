@@ -14,7 +14,7 @@ my @cleanup = (
 );
 
 my $arg = shift // "I";
-my $position = shift // $position;
+$position = shift // $position;
 
 if ($arg eq "I") {
 	print `xrandr --output $output --auto --$position-of $base_output`;

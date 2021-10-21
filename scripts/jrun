@@ -2,4 +2,4 @@
 
 project=$1
 shift 1
-doas jexec -U brtastic -l devenv /bin/sh -c "PATH=\`sh /home/brtastic/setenv\` && cd /home/brtastic/$project && $*"
+doas jexec -U brtastic -l devenv /bin/sh -c "PATH=\`sh /home/brtastic/setenv\` && cd /home/brtastic/prj/$project && $*"

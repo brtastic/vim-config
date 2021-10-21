@@ -138,6 +138,11 @@ function! s:setInsertModeMaps()
 		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas '' => (<CR>);<Esc>O<Tab>is => 'ro',<Esc>k$F'i
 		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; die Dumper();<Esc>hi
 		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>}<Esc>kO<Tab>
+
+		autocmd FileType pascal inoremap <buffer> &beg <c-g>ubegin<CR>end;<Esc>
+		autocmd FileType pascal inoremap <buffer> &pro <c-g>u<Esc>biprocedure <Esc>A();<Esc>$F)i
+		autocmd FileType pascal inoremap <buffer> &fun <c-g>u<Esc>bifunction <Esc>A(): T;<Esc>$F)i
+		autocmd FileType pascal inoremap <buffer> &mode <c-g>u{$mode objfpc}{$H+}{$J-}
 	augroup END
 endfunction
 "
@@ -155,7 +160,6 @@ endfunction
 function! s:setAutocommands()
 	augroup vimrc_autocommands
 		autocmd!
-		autocmd BufRead * call LoadLocalFileOptions()
 		autocmd BufWritePre * call FixTrailingWhitespace()
 		autocmd FileType nerdtree unmap <buffer> ?
 
@@ -290,24 +294,6 @@ function! AutoRestoreWinView()
 			call winrestview(w:SavedBufView[buf])
 		endif
 		unlet w:SavedBufView[buf]
-	endif
-endfunction
-
-function! LoadLocalFileOptions()
-	if strlen(&buftype) == 0
-		let thisdir = expand("<afile>:p:h")
-		while strlen(thisdir) > 1
-			let vi = thisdir . "/.vi"
-			if (filereadable(vi))
-				let contents = readfile(vi, '', 1)[0]
-				let width = strcharpart(contents, 0, 1)
-				let rest = strcharpart(contents, 1)
-				let type = rest ==# "et" ? "et" : "noet"
-				execute "setlocal sw=" . width . " ts=" . width . " " . type
-				break
-			endif
-			let thisdir = fnamemodify(thisdir, ":h")
-		endwhile
 	endif
 endfunction
 
