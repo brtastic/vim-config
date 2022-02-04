@@ -30,14 +30,15 @@ function! s:setDisplayOptions()
 	syntax on
 	set synmaxcol=3000
 	set listchars=tab:»\ ,space:·,trail:‼,nbsp:◦
-	set nolist
+	set list
 	set sidescrolloff=5
 	set wrap
 	set nohlsearch
 	set wildmenu
 	set ruler
-	set laststatus=0
-	set showtabline=0
+	set laststatus=2
+	set showtabline=1
+	let g:pascal_fpc=1
 endfunction
 
 " INDENTING AND EDITING
@@ -93,7 +94,6 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
-	nnoremap <silent> <leader>i :call SwapIdeMode()<CR>
 	nnoremap <leader>du :cd ..<CR>:pwd<CR>
 	nnoremap <leader>dl :pwd<CR>
 	nnoremap <leader>dh :cd %:p:h<CR>:pwd<CR>
@@ -202,7 +202,7 @@ function! s:setPluginOptions()
 
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
-	let g:gutentags_enabled = 0
+	let g:gutentags_enabled = 1
 	let g:gutentags_ctags_executable = "uctags"
 
 	" FZF
@@ -294,24 +294,6 @@ function! AutoRestoreWinView()
 			call winrestview(w:SavedBufView[buf])
 		endif
 		unlet w:SavedBufView[buf]
-	endif
-endfunction
-
-function! SwapIdeMode()
-	if exists("g:ide_mode") && g:ide_mode
-		let g:ide_mode = 0
-		windo set norelativenumber
-		windo set nolist
-		set showtabline=1
-		set laststatus=0
-		let g:gutentags_enabled = 0
-	else
-		let g:ide_mode = 1
-		windo set relativenumber
-		windo set list
-		set showtabline=1
-		set laststatus=2
-		let g:gutentags_enabled = 1
 	endif
 endfunction
 
