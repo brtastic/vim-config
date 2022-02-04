@@ -81,14 +81,9 @@ endfunction
 " LEADER KEY BINDINGS
 function! s:setLeaderKeyMaps()
 	nnoremap <leader>, ,
-	nnoremap <leader>oo :e ~/.vim/org/
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
-	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
-	nnoremap <leader>du :cd ..<CR>:pwd<CR>
-	nnoremap <leader>dl :pwd<CR>
-	nnoremap <leader>dh :cd %:p:h<CR>:pwd<CR>
 	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
 	vnoremap <leader>y "+y
 	noremap <leader>p "+p
@@ -97,9 +92,6 @@ endfunction
 
 " COMMAND MODE BINDINGS
 function! s:setCommandModeMaps()
-	cnoremap &ss set ts=2 sw=2<CR>
-	cnoremap &sss set ts=3 sw=3<CR>
-	cnoremap &ssss set ts=4 sw=4<CR>
 endfunction
 
 " INSERT MODE BINDINGS
