@@ -168,10 +168,6 @@ function! s:setPluginOptions()
 	noremap <silent> <leader>T :NERDTreeFind<CR>
 	let g:NERDTreeMinimalUI = 1
 
-	" VDEBUG
-	let g:vdebug_options = {}
-	let g:vdebug_options["break_on_open"] = 0
-
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
 	let g:gutentags_enabled = 1
@@ -190,16 +186,10 @@ function! s:setPluginOptions()
 	nnoremap <leader>c :call AvoidNerdTree(":History:")<CR>
 	nnoremap <leader>e :call AvoidNerdTree(":History/")<CR>
 
-	nmap <leader><tab> <plug>(fzf-maps-n)
 	imap <c-x><c-l> <plug>(fzf-complete-line)
-
-	command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, "--skip-vcs-ignores", <bang>0)
 
 	" ESEARCH
 	map <leader>fr <Plug>(esearch)
-
-	" SIMPLE WORKSPACE
-	let g:simplews_short_commands = 0
 
 	" COMMENTARY
 	nmap Q gcc
