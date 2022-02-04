@@ -28,3 +28,4 @@ git clone https://github.com/majutsushi/tagbar.git
 git clone https://github.com/brtastic/vorg.git
 git clone https://github.com/brtastic/vim-jsonviewer.git
 git clone https://github.com/mattn/emmet-vim
+git clone https://github.com/tpope/vim-repeat
