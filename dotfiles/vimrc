@@ -73,10 +73,6 @@ function! s:setGenericKeyMaps()
 	nnoremap ' `
 	nnoremap ` '
 	nnoremap Y y$
-	nnoremap <silent> J :bprev<CR>
-	vnoremap J <nop>
-	nnoremap <silent> K :bnext<CR>
-	vnoremap K <nop>
 	nnoremap <c-j> O<Esc>j
 	nnoremap <c-k> o<Esc>k
 	nnoremap go i<CR><Esc>
@@ -88,10 +84,6 @@ function! s:setLeaderKeyMaps()
 	nnoremap <leader>oo :e ~/.vim/org/
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
-	nnoremap <leader>j J
-	nnoremap <leader>k K
-	vnoremap <leader>j J
-	vnoremap <leader>k K
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>\ :call AvoidNerdTree(":e $MYVIMRC")<CR>
 	nnoremap <leader>du :cd ..<CR>:pwd<CR>
