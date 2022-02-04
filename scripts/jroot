@@ -1,8 +1,12 @@
 #!/bin/sh
 
 project=$1
+if [ "$project" == "." ]; then
+	project=$(basename $(pwd))
+fi
+
 shift 1
-doas jexec -l devenv /bin/sh -c "PATH=\`sh /home/brtastic/setenv\` && cd /home/brtastic/prj/$project && $*"
+doas jexec -l devenv /bin/sh -c "PATH=\`sh /home/devenv/setenv\` && cd /home/devenv/prj/$project && $*"
 
 # put into /home/brtastic/setenv in jail:
 # echo "/root/perl5/perlbrew/perls/perl-$version/bin:/root/perl5/perlbrew/bin:$PATH;"

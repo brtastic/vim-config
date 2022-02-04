@@ -1,5 +1,9 @@
 #!/bin/sh
 
 project=$1
+if [ "$project" == "." ]; then
+	project=$(basename $(pwd))
+fi
+
 shift 1
-doas jexec -U brtastic -l devenv /bin/sh -c "PATH=\`sh /home/brtastic/setenv\` && cd /home/brtastic/prj/$project && $*"
+doas jexec -U devenv -l devenv /bin/sh -c "PATH=\`sh /home/devenv/setenv\` && cd /home/devenv/prj/$project && $*"
