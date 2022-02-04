@@ -85,6 +85,7 @@ function! s:setLeaderKeyMaps()
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
 	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
+
 	vnoremap <leader>y "+y
 	noremap <leader>p "+p
 	noremap <leader>P "+P
@@ -143,8 +144,6 @@ function! s:setAutocommands()
 		au InsertEnter * set noignorecase
 		au InsertLeave * set ignorecase
 
-		autocmd FileType perl nnoremap <buffer> <leader>s :set filetype=pod<CR>
-		autocmd FileType pod nnoremap <buffer> <leader>s :set filetype=perl<CR>
 		autocmd FileType sql imapclear <buffer>
 		autocmd FileType vorg nunmap <buffer> -
 		autocmd FileType * set synmaxcol=5000
