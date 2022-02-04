@@ -25,7 +25,6 @@ git clone https://github.com/eugen0329/vim-esearch.git
 git clone https://github.com/majutsushi/tagbar.git
 
 # Optional
-git clone https://github.com/kana/vim-smartword.git
 git clone https://github.com/brtastic/vim-simple-workspace.git
 git clone https://github.com/brtastic/vorg.git
 git clone https://github.com/brtastic/vim-jsonviewer.git

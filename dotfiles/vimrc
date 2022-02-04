@@ -222,10 +222,6 @@ function! s:setPluginOptions()
 	" ESEARCH
 	map <leader>fr <Plug>(esearch)
 
-	" SMART WORD
-	map <leader>w  <Plug>(smartword-w)
-	map <leader>b  <Plug>(smartword-b)
-
 	" SIMPLE WORKSPACE
 	let g:simplews_short_commands = 0
 
