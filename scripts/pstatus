@@ -36,49 +36,6 @@ sub calendar_module {
 	return "$calendar_symbol $mday, $weekday";
 }
 
-sub scheduler_module_generator {
-	my $alarm_symbol = "";
-	my $scheduler_file = $ENV{HOME} . "/.schedules";
-	my $alert_time = 5 * 60;
-	my @scheduled;
-	my $last_mod;
-
-	return sub {
-		if (-f $scheduler_file && (!defined $last_mod || -M $scheduler_file ne $last_mod)) {
-			@scheduled = ();
-			$last_mod = -M $scheduler_file;
-			open my $schedules, "<utf8", $scheduler_file;
-			while (my $schedule = <$schedules>) {
-				chomp $schedule;
-
-				if ($schedule =~ m{^([^@]*)@([^-]*)-(.*)}) {
-					push @scheduled, [$1, $2, $3];
-				}
-			}
-		}
-
-		my @found;
-		for my $schedule_data (@scheduled) {
-			my ($date, $time, $message) = @$schedule_data;
-			my ($day, $month, $year) = split /-/, $date;
-			my ($hour, $min) = split /:/, $time;
-
-			my $now = localtime;
-			$day //= $now->mday;
-			$month //= $now->mon;
-			$year //= $now->year;
-			my $d1 = Time::Piece->strptime("$day $month $year $hour $min", "%d %m %Y %H %M");
-			my $diff = $now - $d1 + $now->tzoffset;
-
-			if ($diff->seconds > 0 && $diff->seconds < $alert_time) {
-				push @found, "$alarm_symbol $message";
-			}
-		}
-
-		return @found;
-	};
-}
-
 sub uptime_module {
 	my $command = "sysctl -n";
 	my $uptime_symbol = "";
@@ -157,7 +114,7 @@ while (1) {
 	my @modules;
 	for ($args{type}) {
 		if (!defined) {
-			@modules = (scheduler_module_generator, \(&battery_module, &sound_module, &ram_module));
+			@modules = \(&battery_module, &sound_module, &ram_module);
 		} elsif (/time/) {
 			@modules = \(&time_module, &calendar_module, &uptime_module);
 		}
