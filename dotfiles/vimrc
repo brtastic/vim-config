@@ -91,6 +91,9 @@ function! s:setLeaderKeyMaps()
 	vnoremap <leader>y "+y
 	noremap <leader>p "+p
 	noremap <leader>P "+P
+
+	nmap <leader>i *#<leader>h
+	vmap <leader>i "vy/<c-r>v<CR>N<leader>h
 endfunction
 
 " COMMAND MODE BINDINGS
