@@ -8,7 +8,6 @@ mkdir ~/config/backup
 mv ~/.vimrc ~/config/backup/
 mv ~/.bashrc ~/config/backup/
 mv ~/.tmux.conf ~/config/backup/
-mv ~/.Xresources ~/config/backup/
 mv ~/.xinitrc ~/config/backup/
 mv ~/.xbindkeysrc ~/config/backup/
 mv ~/.gitignore ~/config/backup/
@@ -19,7 +18,6 @@ ln -s ~/config/dotfiles/neovim ~/.config/nvim/init.vim
 ln -s ~/config/dotfiles/bashrc ~/.bashrc
 ln -s ~/config/dotfiles/vimrc ~/.vimrc
 ln -s ~/config/dotfiles/tmux.conf ~/.tmux.conf
-ln -s ~/config/dotfiles/Xresources ~/.Xresources
 ln -s ~/config/dotfiles/xinitrc ~/.xinitrc
 ln -s ~/config/dotfiles/xbindkeysrc ~/.xbindkeysrc
 ln -s ~/config/dotfiles/gitignore ~/.gitignore
@@ -27,9 +25,9 @@ ln -s ~/config/dotfiles/perltidyrc ~/.perltidyrc
 ln -s ~/config/dotfiles/profile ~/.profile
 
 git config --global core.excludesfile ~/.gitignore
-git config --global user.name brtastic
-git config --global user.email brtastic.dev@gmail.com
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
 cp ~/config/local_config.example.sh ~/config/local_config.sh
+doas cp ~/config/scripts/brightness /usr/local/bin/brightness
+\curl -L https://install.perlbrew.pl | bash

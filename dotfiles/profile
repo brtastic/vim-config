@@ -7,7 +7,7 @@
 
 # These are normally set through /etc/login.conf.  You may override them here
 # if wanted.
-PATH=$HOME/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin; export PATH
+PATH=$HOME/bin:$HOME/config/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin; export PATH
 
 # Setting TERM is normally done through /etc/ttys.  Do only override
 # if you're sure that you'll never log in via telnet or xterm or a

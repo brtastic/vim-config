@@ -18,10 +18,6 @@
 	m:0x50 + c:117
 	Super_L + Next
 
-"kbtgl"
-	m:0x0 + c:127
-	Pause
-
 "gnome-screenshot -i"
 	m:0x0 + c:107
 	Print

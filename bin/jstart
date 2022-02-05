@@ -1,0 +1,7 @@
+what=$1
+
+if [ "$what" = "" ]; then
+	what="start"
+fi
+
+doas service jail one$what devenv

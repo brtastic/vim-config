@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
 mkdir -p ~/.vim/.undo ~/.vim/.swap ~/.vim/.backup
-mkdir -p ~/.vim/org
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
