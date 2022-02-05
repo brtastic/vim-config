@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+
+use v5.30;
+use warnings;
+use autodie;
+
+use constant NOTES_DIR => $ENV{HOME} . '/.envdata';
+use constant NOTE_FILE => NOTES_DIR . '/note';
+
+mkdir NOTES_DIR
+	if !-e NOTES_DIR;
+
+if (@ARGV) {
+	open my $fh, '>', NOTE_FILE;
+	print {$fh} join ' ', @ARGV;
+}
+else {
+	open my $fh, '<', NOTE_FILE;
+	print <$fh>;
+}

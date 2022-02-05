@@ -6,7 +6,7 @@ use autodie;
 use Time::Piece;
 use Time::Seconds;
 
-use constant TODO_DIR => $ENV{HOME} . '/.todo';
+use constant TODO_DIR => $ENV{HOME} . '/.envdata/todo';
 my $now = localtime;
 my $today = $now->dmy;
 my $yesterday = ($now - ONE_DAY)->dmy;
