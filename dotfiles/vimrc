@@ -36,7 +36,7 @@ function! s:setDisplayOptions()
 	set nohlsearch
 	set wildmenu
 	set ruler
-	set laststatus=2
+	set laststatus=1
 	set showtabline=1
 	let g:pascal_fpc=1
 endfunction
