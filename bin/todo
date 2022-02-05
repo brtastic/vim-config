@@ -12,6 +12,9 @@ my $today = $now->dmy;
 my $yesterday = ($now - ONE_DAY)->dmy;
 my @today_todo;
 
+binmode STDOUT, ':encoding(utf8)';
+binmode STDIN, ':encoding(utf8)';
+
 sub prompt
 {
 	my ($text, $bool) = @_;
@@ -83,9 +86,9 @@ sub list
 {
 	my @todos = get_todos todo_filename $today;
 	my %done = map { $_ => 1 } @{pop @todos};
-	@todos = map { $todos[$_] } grep { !$done{$_} } 0 .. $#todos;
+	@todos = map { "$_: $todos[$_]" } 0 .. $#todos;
 
-	say for map { "$_: $todos[$_]" } 0 .. $#todos;
+	say for map { $todos[$_] } grep { !$done{$_} } 0 .. $#todos;
 	say 'Nothing for today!'
 		unless @todos;
 }
