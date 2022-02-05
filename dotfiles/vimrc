@@ -92,8 +92,7 @@ function! s:setLeaderKeyMaps()
 	noremap <leader>p "+p
 	noremap <leader>P "+P
 
-	nmap <leader>i *#<leader>h
-	vmap <leader>i "vy/<c-r>v<CR>N<leader>h
+	nnoremap <silent> <leader>i *#:set hlsearch<CR>
 endfunction
 
 " COMMAND MODE BINDINGS
@@ -127,7 +126,7 @@ function! s:setInsertModeMaps()
 		autocmd FileType pascal inoremap <buffer> &mode <c-g>u{$mode objfpc}{$H+}{$J-}
 	augroup END
 endfunction
-"
+
 "------------
 "- COMMANDS -
 "------------
