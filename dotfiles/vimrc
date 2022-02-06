@@ -36,9 +36,8 @@ function! s:setDisplayOptions()
 	set nohlsearch
 	set wildmenu
 	set ruler
-	set laststatus=0
-	set statusline=%<%=%-13.(%l,%c%V%)\ %P\ " same as ruler
 	set showtabline=1
+	set laststatus=2
 	let g:pascal_fpc=1
 endfunction
 
@@ -67,7 +66,7 @@ endfunction
 " GENERAL KEYBINDINGS
 function! s:setGenericKeyMaps()
 	noremap <c-c> <Esc>
-	nnoremap <c-c> <c-g>
+	nnoremap r<c-c> <Nop>
 	inoremap <c-c> <Esc>
 	nnoremap <Space> <c-w><c-w>
 	tnoremap <Space><Space> <c-\><c-n>
@@ -86,7 +85,6 @@ function! s:setLeaderKeyMaps()
 	nnoremap <silent> <leader>x :Bw<CR>
 	nnoremap <silent> <leader>X :Bw!<CR>
 	nnoremap <silent> <leader>h :set hlsearch!<CR>
-	nnoremap <silent> <leader>= :call execute("put =" . getline("."))<CR>
 
 	vnoremap <leader>y "+y
 	noremap <leader>p "+p
@@ -142,6 +140,7 @@ function! s:setAutocommands()
 	augroup vimrc_autocommands
 		autocmd!
 		autocmd BufWritePre * call FixTrailingWhitespace()
+		autocmd BufWritePre * call FixTrailingNewlines()
 		autocmd FileType nerdtree unmap <buffer> ?
 
 		" case sensitive completion
@@ -230,6 +229,20 @@ function! FixTrailingWhitespace()
 	let view = winsaveview()
 	%s/\s\+$//ge
 	call winrestview(view)
+endfunction
+
+function! FixTrailingNewlines()
+	let lastl = line('$')
+	let startl = lastl + 1
+	while strlen(getline(startl - 1)) == 0
+		let startl -= 1
+	endwhile
+
+	if startl < lastl
+		call deletebufline('%', startl + 1, lastl)
+	elseif startl > lastl
+		call appendbufline('%', lastl, '')
+	endif
 endfunction
 
 function! AvoidNerdTree(comm)
