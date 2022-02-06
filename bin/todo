@@ -34,7 +34,7 @@ sub get_todos
 	my ($file) = @_;
 	open my $fh, '<:encoding(utf-8)', $file;
 
-	my @todos = <$fh>;
+	my @todos = grep { /^- \[/ } <$fh>;
 	my @done = grep { $todos[$_] =~ /^- \[x\]/ } 0 .. $#todos;
 	@todos = map { substr $_, 6 } @todos;
 	chomp @todos;
