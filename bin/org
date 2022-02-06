@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+
+use v5.30;
+use warnings;
+use autodie;
+
+use constant ORG_DIR => $ENV{HOME} . '/.envdata/org';
+
+mkdir ORG_DIR
+	if !-e ORG_DIR;
+
+my ($arg) = @ARGV;
+
+if (!$arg) {
+	my @list = glob ORG_DIR . '/*.vorg';
+	say for map { s{^.*/(.+)\.vorg$}{$1}r } @list;
+}
+elsif ($arg eq 'list') {
+	system("list " . ORG_DIR);
+}
+elsif ($arg) {
+	my $name = ORG_DIR . "/$arg.vorg";
+	if (!-e $name) {
+		open my $fh, '>:encoding(utf8)', $name;
+		print {$fh} "Organizing items for $arg:";
+	}
+	system(qq{vi $name});
+}
+else {
+	say 'Usage: org [NAME | list]';
+}
+
