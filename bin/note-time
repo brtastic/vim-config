@@ -1,1 +1,1 @@
-note Checkpoint at $(date "+%H:%M")
+note at $(date "+%H:%M")
