@@ -123,8 +123,8 @@ if (!$arg) {
 elsif ($arg eq 'vi') {
 	system("vi " . todo_filename $today);
 }
-elsif ($arg eq 'ranger') {
-	system("ranger " . TODO_DIR);
+elsif ($arg eq 'list') {
+	system("list " . TODO_DIR);
 }
 elsif ($arg eq 'a') {
 	my $new = prompt 'New todo';
@@ -137,6 +137,6 @@ elsif ($arg =~ /^-\d$/) {
 	list;
 }
 else {
-	say 'Usage: todo [a | vi | ranger | -N]';
+	say 'Usage: todo [a | vi | list | -N]';
 }
 

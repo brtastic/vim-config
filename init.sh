@@ -24,6 +24,8 @@ ln -s ~/config/dotfiles/gitignore ~/.gitignore
 ln -s ~/config/dotfiles/perltidyrc ~/.perltidyrc
 ln -s ~/config/dotfiles/profile ~/.profile
 
+ln -s /usr/local/bin/ranger ~/bin/list
+
 git config --global core.excludesfile ~/.gitignore
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
