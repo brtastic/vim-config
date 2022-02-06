@@ -10,11 +10,21 @@ use constant NOTE_FILE => NOTES_DIR . '/note';
 mkdir NOTES_DIR
 	if !-e NOTES_DIR;
 
+sub get_note
+{
+	open my $fh, '<', NOTE_FILE;
+	return scalar <$fh>;
+}
+
 if (@ARGV) {
+	my $content = join ' ', @ARGV;
+	if (substr($content, 0, 1) eq '+') {
+		substr $content, 0, 1, '';
+		$content = get_note . $content;
+	}
 	open my $fh, '>', NOTE_FILE;
-	print {$fh} join ' ', @ARGV;
+	print {$fh} $content;
 }
 else {
-	open my $fh, '<', NOTE_FILE;
-	print <$fh>;
+	print get_note;
 }
