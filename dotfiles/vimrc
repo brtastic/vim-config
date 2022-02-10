@@ -148,7 +148,6 @@ function! s:setAutocommands()
 		au InsertLeave * set ignorecase
 
 		autocmd FileType sql imapclear <buffer>
-		autocmd FileType vorg nunmap <buffer> -
 		autocmd FileType * set synmaxcol=5000
 	augroup END
 endfunction

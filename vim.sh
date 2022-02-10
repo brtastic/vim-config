@@ -24,7 +24,8 @@ git clone https://github.com/eugen0329/vim-esearch.git
 git clone https://github.com/majutsushi/tagbar.git
 
 # Optional
-git clone https://github.com/brtastic/vorg.git
+git clone https://github.com/brtastic/vim-vorg-md.git
 git clone https://github.com/brtastic/vim-jsonviewer.git
 git clone https://github.com/mattn/emmet-vim
 git clone https://github.com/tpope/vim-repeat
+

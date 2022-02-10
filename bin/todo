@@ -59,7 +59,7 @@ sub put_todos
 	return;
 }
 
-sub todo_filename { sprintf("%s/%s.vorg", TODO_DIR, shift) }
+sub todo_filename { sprintf("%s/%s.md", TODO_DIR, shift) }
 
 sub setup
 {
