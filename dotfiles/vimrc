@@ -38,7 +38,6 @@ function! s:setDisplayOptions()
 	set ruler
 	set showtabline=1
 	set laststatus=2
-	let g:pascal_fpc=1
 endfunction
 
 " INDENTING AND EDITING
@@ -109,20 +108,6 @@ function! s:setInsertModeMaps()
 	inoremap &( <c-g>u(<CR>)<Esc>
 	inoremap &;( <c-g>u(<CR>);<Esc>
 	inoremap &,( <c-g>u(<CR>),<Esc>
-
-	augroup vimrc_snippets
-		autocmd!
-		autocmd FileType perl inoremap <buffer> &se <c-g>u$self->
-		autocmd FileType perl inoremap <buffer> &my <c-g>umy () = @_;<Esc>F)i
-		autocmd FileType perl inoremap <buffer> &moo <c-g>uhas '' => (<CR>);<Esc>O<Tab>is => 'ro',<Esc>k$F'i
-		autocmd FileType perl inoremap <buffer> &dd <c-g>uuse Data::Dumper; die Dumper();<Esc>hi
-		autocmd FileType perl inoremap <buffer> &try <c-g>utry {<CR>} catch {<CR>}<Esc>kO<Tab>
-
-		autocmd FileType pascal inoremap <buffer> &beg <c-g>ubegin<CR>end;<Esc>
-		autocmd FileType pascal inoremap <buffer> &pro <c-g>u<Esc>biprocedure <Esc>A();<Esc>$F)i
-		autocmd FileType pascal inoremap <buffer> &fun <c-g>u<Esc>bifunction <Esc>A(): T;<Esc>$F)i
-		autocmd FileType pascal inoremap <buffer> &mode <c-g>u{$mode objfpc}{$H+}{$J-}
-	augroup END
 endfunction
 
 "------------

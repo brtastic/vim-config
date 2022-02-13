@@ -13,6 +13,7 @@ git clone https://github.com/junegunn/fzf.vim.git
 git clone https://github.com/scrooloose/nerdtree.git
 git clone https://github.com/moll/vim-bbye.git
 git clone https://github.com/morhetz/gruvbox.git
+git clone https://github.com/bbrtj/vim-fthelpers.git
 
 # Nice to have
 git clone https://github.com/ludovicchabant/vim-gutentags.git
@@ -24,8 +25,8 @@ git clone https://github.com/eugen0329/vim-esearch.git
 git clone https://github.com/majutsushi/tagbar.git
 
 # Optional
-git clone https://github.com/brtastic/vim-vorg-md.git
-git clone https://github.com/brtastic/vim-jsonviewer.git
+git clone https://github.com/bbrtj/vim-vorg-md.git
+git clone https://github.com/bbrtj/vim-jsonviewer.git
 git clone https://github.com/mattn/emmet-vim
 git clone https://github.com/tpope/vim-repeat
 
