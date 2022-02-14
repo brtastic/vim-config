@@ -4,29 +4,34 @@ use v5.30;
 use warnings;
 use autodie;
 
-use constant ORG_DIR => $ENV{HOME} . '/.envdata/org';
+use File::Basename qw(dirname);
+use lib dirname(dirname(__FILE__)) . '/lib';
+use CommandHelpers dir => 'org';
 
-mkdir ORG_DIR
-	if !-e ORG_DIR;
+my @list = map { s{^.*/(.+)\.md$}{$1}r } glob DATA_DIR . '/*.md';
+
+CommandHelpers->handle_completion(@list, 'list');
 
 my ($arg) = @ARGV;
 
 if (!$arg) {
-	my @list = glob ORG_DIR . '/*.md';
-	say for map { s{^.*/(.+)\.md$}{$1}r } @list;
+	say for @list;
 }
 elsif ($arg eq 'list') {
-	system("list " . ORG_DIR);
+	system("list " . DATA_DIR);
 }
 elsif ($arg) {
-	my $name = ORG_DIR . "/$arg.md";
+	my $name = DATA_DIR . "/$arg.md";
 	if (!-e $name) {
 		open my $fh, '>:encoding(utf8)', $name;
 		print {$fh} "Organizing items for $arg:";
 	}
 	system(qq{vi $name});
 }
-else {
-	say 'Usage: org [NAME | list]';
-}
+
+__END__
+
+=pod
+
+Usage: org [NAME | list]
 
