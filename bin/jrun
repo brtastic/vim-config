@@ -1,9 +1,0 @@
-#!/bin/sh
-
-project=$1
-if [ "$project" == "." ]; then
-	project=$(basename $(pwd))
-fi
-
-shift 1
-doas jexec -U devenv -l devenv /bin/sh -c "PATH=\`sh /home/devenv/setenv\` && cd /home/devenv/prj/$project && $*"

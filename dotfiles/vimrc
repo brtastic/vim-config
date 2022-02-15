@@ -157,7 +157,6 @@ function! s:setPluginOptions()
 	" GUTENTAGS
 	let g:gutentags_ctags_tagfile = ".ctags"
 	let g:gutentags_enabled = 1
-	let g:gutentags_ctags_executable = "uctags"
 
 	" FZF
 	nnoremap <leader>ff :call AvoidNerdTree(":Files")<CR>
