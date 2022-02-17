@@ -1,5 +1,0 @@
-if [ "$1" ]; then
-	vi $1 -c 'silent Jv'
-else
-	echo 'json file name expected'
-fi
