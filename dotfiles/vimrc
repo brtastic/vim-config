@@ -198,15 +198,6 @@ endfunction
 "- HELPER FUNCTIONS -
 "--------------------
 
-function! RunCommand(command)
-	rightbelow new
-	resize -10
-	call append(0, split(system(a:command), "\n"))
-	setlocal nomodifiable buftype=nofile nobuflisted bufhidden=wipe
-	map <silent> <buffer> q :q<CR>
-	map <silent> <buffer> <CR> :q<CR>
-endfunction
-
 function! FixTrailingWhitespace()
 	let view = winsaveview()
 	%s/\s\+$//ge
