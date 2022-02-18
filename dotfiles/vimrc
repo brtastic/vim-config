@@ -89,7 +89,7 @@ function! s:setLeaderKeyMaps()
 	noremap <leader>p "+p
 	noremap <leader>P "+P
 
-	nnoremap <silent> <leader>i *#:set hlsearch<CR>
+	nnoremap <silent> <leader>i #*:set hlsearch<CR>
 endfunction
 
 " COMMAND MODE BINDINGS
