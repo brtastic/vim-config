@@ -10,12 +10,63 @@ use File::Basename qw(dirname);
 use lib dirname(dirname(__FILE__)) . '/lib';
 use CommandHelpers dir => 'todo';
 
-my $now = localtime;
-my $today = $now->dmy;
-my $yesterday = ($now - ONE_DAY)->dmy;
-
 binmode STDOUT, ':encoding(utf8)';
 binmode STDIN, ':encoding(utf8)';
+
+sub todo_filename
+{
+	my $when = shift;
+	my $time;
+
+	if (!$when) {
+		$time = localtime()->dmy;
+	}
+	elsif ($when =~ /\A-\d+\z/) {
+		$time = (localtime() + $when * ONE_DAY)->dmy;
+	}
+	else {
+		return $when;
+	}
+
+	return sprintf("%s/%s.md", DATA_DIR, $time);
+}
+
+sub get_todos
+{
+	my $file = todo_filename @_;
+	open my $fh, '<:encoding(utf-8)', $file;
+
+	my @todos;
+	for my $line (readline $fh) {
+		next unless $line =~ /^- \[/;
+
+		chomp $line;
+		push @todos, {
+			content => substr($line, 6),
+			done => scalar($line =~ /^- \[x\]/),
+		};
+	}
+
+	@todos;
+}
+
+sub put_todos
+{
+	my @todos = @_;
+	my $file = todo_filename;
+
+	open my $fh, '>:encoding(utf-8)', $file;
+	for my $todo (@todos) {
+		my $prefix = $todo->{done}
+			? '- [x] '
+			: '- [ ] '
+			;
+
+		say {$fh} $prefix . $todo->{content};
+	}
+
+	return;
+}
 
 sub prompt
 {
@@ -31,63 +82,33 @@ sub prompt
 	return $res;
 }
 
-sub get_todos
-{
-	my ($file) = @_;
-	open my $fh, '<:encoding(utf-8)', $file;
-
-	my @todos = grep { /^- \[/ } <$fh>;
-	my @done = grep { $todos[$_] =~ /^- \[x\]/ } 0 .. $#todos;
-	@todos = map { substr $_, 6 } @todos;
-	chomp @todos;
-
-	return (@todos, \@done);
-}
-
-sub put_todos
-{
-	my ($file, @todos) = @_;
-	my %done = map { $_ => 1 } @{pop @todos};
-
-	open my $fh, '>:encoding(utf-8)', $file;
-	@todos = map {
-		($done{$_}
-			? '- [x] '
-			: '- [ ] '
-		) . $todos[$_]
-	} 0 .. $#todos;
-
-	say {$fh} $_ for @todos;
-	return;
-}
-
-sub todo_filename { sprintf("%s/%s.md", DATA_DIR, shift) }
-
 sub setup
 {
-	if (!-e (my $tf = todo_filename $today)) {
+	if (!-e todo_filename) {
 		my @todos;
 
-		if (-e (my $yf = todo_filename $yesterday)) {
+		if (-e (my $yf = todo_filename -1)) {
 			my @yesterday_todos = get_todos $yf;
-			my %yesterday_done = map { $_ => 1 } @{pop @yesterday_todos};
-			@yesterday_todos = map { $yesterday_todos[$_] } grep { !$yesterday_done{$_} } 0 .. $#yesterday_todos;
-			if (@yesterday_todos > 0 && prompt('Setting up for today. Import undone from yesterday?', 1)) {
-				@todos = @yesterday_todos;
+			my @yesterday_undone = grep { !$_->{done} } @yesterday_todos;
+			if (@yesterday_undone > 0 && prompt('Setting up for today. Import undone from yesterday?', 1)) {
+				@todos = @yesterday_undone;
 			}
 		}
 
-		put_todos $tf, @todos, [];
+		put_todos @todos;
 	}
 }
 
 sub list
 {
-	my @todos = get_todos todo_filename $today;
-	my %done = map { $_ => 1 } @{pop @todos};
-	@todos = map { "$_: $todos[$_]" } grep { !$done{$_} } 0 .. $#todos;
+	my @todos = get_todos;
+	for (0 .. $#todos) {
+		$todos[$_]->{content} = "$_: " . $todos[$_]->{content};
+	}
 
-	say for map { $todos[$_] } 0 .. $#todos;
+	@todos = grep { !$_->{done} } @todos;
+
+	say for map { $_->{content} } @todos;
 	say 'Nothing for today!'
 		unless @todos;
 }
@@ -95,23 +116,22 @@ sub list
 sub add_new
 {
 	my ($new) = @_;
-	my $fn = todo_filename $today;
 
-	my @todos = get_todos $fn;
-	my @done = @{pop @todos};
-	push @todos, $new;
-	put_todos $fn, @todos, \@done;
+	my @todos = get_todos;
+	push @todos, { content => $new };
+	put_todos @todos;
 }
 
 sub complete
 {
 	my ($num) = @_;
-	my $fn = todo_filename $today;
 
-	my @todos = get_todos $fn;
-	my @done = @{pop @todos};
-	push @done, $num;
-	put_todos $fn, @todos, \@done;
+	my @todos = get_todos;
+	die 'invalid number'
+		if $num > $#todos;
+
+	$todos[$num]->{done} = 1;
+	put_todos @todos;
 }
 
 setup;
@@ -120,7 +140,7 @@ if (!$arg) {
 	list;
 }
 elsif ($arg eq 'vi') {
-	system("vi " . todo_filename $today);
+	system("vi " . todo_filename);
 }
 elsif ($arg eq 'list') {
 	system("list " . DATA_DIR);
