@@ -20,4 +20,5 @@ xcompmgr &
 pkill -u $USER -f ^perl.*pstatus
 pstatus &
 
-exec dwm
+exec startdwm
+

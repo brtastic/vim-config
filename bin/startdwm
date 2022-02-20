@@ -1,0 +1,5 @@
+# this script makes it possible to restart dwm without closing the windows
+while true; do
+	dwm
+done
+
