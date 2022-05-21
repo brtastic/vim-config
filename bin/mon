@@ -15,19 +15,26 @@ my @cleanup = (
 
 my $arg = shift // "I";
 $position = shift // $position;
+`xrandr`; # for some reason empty randr needs to be run
 
-if ($arg eq "I") {
-	print `xrandr --output $output --auto --$position-of $base_output`;
-}
-elsif ($arg eq "C") {
-	print `xrandr --output $output --auto --same-as $base_output`;
-}
-elsif ($arg eq "O") {
-	print `xrandr --output $output --off`;
-	print `xrandr --output $base_output --primary`;
-}
-else {
-	die "please specify I, O or C";
+for my $flag (split //, $arg) {
+	if ($flag eq "I") {
+		print `xrandr --output $output --auto --$position-of $base_output`;
+	}
+	elsif ($flag eq "C") {
+		print `xrandr --output $output --auto --same-as $base_output`;
+	}
+	elsif ($flag eq "O") {
+		print `xrandr --output $output --off`;
+		print `xrandr --output $base_output --primary`;
+	}
+	elsif ($flag eq "P") {
+		print `xrandr --output $output --primary`;
+	}
+	else {
+		die "please specify any of: I, O, C, P";
+	}
 }
 
 `$_` for (@cleanup);
+
