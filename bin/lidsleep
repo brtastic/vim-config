@@ -1,0 +1,11 @@
+what=$1
+arg=S3
+
+if [ "$what" = "yes" ]; then
+	arg="S3"
+elif [ "$what" = "no" ]; then
+	arg="NONE"
+fi
+
+doas sysctl hw.acpi.lid_switch_state=$arg
+
