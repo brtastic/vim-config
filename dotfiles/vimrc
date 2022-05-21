@@ -73,8 +73,8 @@ function! s:setGenericKeyMaps()
 	nnoremap ' `
 	nnoremap ` '
 	nnoremap Y y$
-	nnoremap <c-j> O<Esc>cc<Esc>j
-	nnoremap <c-k> o<Esc>cc<Esc>k
+	nnoremap <c-j> O<Esc>"_cc<Esc>j
+	nnoremap <c-k> o<Esc>"_cc<Esc>k
 	nnoremap go i<CR><Esc>
 endfunction
 
