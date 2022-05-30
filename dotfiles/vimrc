@@ -29,7 +29,7 @@ endfunction
 function! s:setDisplayOptions()
 	syntax on
 	set synmaxcol=3000
-	set listchars=tab:»\ ,space:·,trail:‼,nbsp:◦
+	set listchars=tab:»\ ,trail:‼,nbsp:◦
 	set list
 	set sidescrolloff=5
 	set wrap
