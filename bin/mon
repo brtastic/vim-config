@@ -31,8 +31,11 @@ for my $flag (split //, $arg) {
 	elsif ($flag eq "P") {
 		print `xrandr --output $output --primary`;
 	}
+	elsif ($flag eq "E") {
+		print `xrandr --output $base_output --off`;
+	}
 	else {
-		die "please specify any of: I, O, C, P";
+		die "please specify any of: I, O, C, P, E";
 	}
 }
 
