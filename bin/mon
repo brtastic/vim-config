@@ -26,7 +26,7 @@ for my $flag (split //, $arg) {
 	}
 	elsif ($flag eq "O") {
 		print `xrandr --output $output --off`;
-		print `xrandr --output $base_output --primary`;
+		print `xrandr --output $base_output --auto --primary`;
 	}
 	elsif ($flag eq "P") {
 		print `xrandr --output $output --primary`;
