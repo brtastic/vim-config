@@ -1,4 +1,0 @@
-if [ "$1" ]; then
-	tmux rename-session "$*"
-fi;
-tmux command -I $(pwd) "attach -c %%"
