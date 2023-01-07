@@ -191,6 +191,9 @@ function! s:setPluginOptions()
 	let g:tagbar_map_togglefold = "za"
 	let g:tagbar_map_jump = ["<CR>", "o"]
 
+	" PERL
+	let g:perl_highlight_data = 1
+
 endfunction
 
 "--------------------
