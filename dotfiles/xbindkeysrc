@@ -1,8 +1,8 @@
-"mixer vol -5 && pstatus --update"
+"mixer vol.volume=-0.05:-0.05 && pstatus --update"
 	m:0x0 + c:122
 	XF86AudioLowerVolume
 
-"mixer vol +5 && pstatus --update"
+"mixer vol.volume=+0.05:+0.05 && pstatus --update"
 	m:0x0 + c:123
 	XF86AudioRaiseVolume
 
@@ -21,3 +21,4 @@
 "gnome-screenshot -i"
 	m:0x0 + c:107
 	Print
+
