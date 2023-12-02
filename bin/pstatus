@@ -75,7 +75,7 @@ sub battery_module {
 
 	my $level = $battery_charging;
 	if (!$charging) {
-		my $result = int(log($percent || 0) / log(2));
+		my $result = int(log($percent || 1) / log(2));
 		$level = $battery_levels[$result > 3 ? $result - 3 : 0];
 	}
 
