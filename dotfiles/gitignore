@@ -4,3 +4,6 @@
 /.gutctags*
 .ignore
 .vi
+/todo
+/todo.md
+
