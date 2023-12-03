@@ -212,7 +212,7 @@ endfunction
 function! FixTrailingNewlines()
 	let lastl = line('$')
 	let startl = lastl + 1
-	while strlen(getline(startl - 1)) == 0
+	while startl > 0 && strlen(getline(startl - 1)) == 0
 		let startl -= 1
 	endwhile
 
